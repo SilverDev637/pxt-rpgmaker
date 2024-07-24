@@ -1,13 +1,14 @@
-//% block="RPG - Stacks"
+//% block="RPG - Stacks" weight=7
 //% color="#004000" icon="\uf1e5"
 namespace Stacks {
     //% block="create new stack on x$x y$y"
-    //% weight=100 color="#400040"
+    //% weight=100 color="#400040" inlineInputMode=inline
     export function createStack(x: number, y: number): stack {
         return new stack(x, y)
     }
 
     export class stack {
+        kind: 'stack' = 'stack'
         x: number
         y: number
         content: Items.item[]

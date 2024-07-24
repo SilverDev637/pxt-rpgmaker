@@ -1,13 +1,14 @@
-//% block="RPG - NPCs"
+//% block="RPG - NPCs" weight=9
 //% color="#004000" icon="\uf1e5"
 namespace NPCs {
     //% block="create new npc on x$x y$y with dialog$dialog"
-    //% weight=100 color="#400040"
+    //% weight=100 color="#400040" inlineInputMode=inline
     export function createNPC(x: number, y: number, dialog: string): npc {
         return new npc(x, y, dialog)
     }
 
     export class npc {
+        kind: 'npc' = 'npc'
         dialog: string
         x: number
         y: number

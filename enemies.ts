@@ -1,13 +1,14 @@
-//% block="RPG - Enemies"
+//% block="RPG - Enemies" weight=8
 //% color="#004000" icon="\uf1e5"
 namespace Enemies {
     //% block="create new enemie on x$x y$y with life$life damage$damage"
-    //% weight=100 color="#400040"
+    //% weight=100 color="#400040" inlineInputMode=inline
     export function createEnemie(x: number, y: number, life: number, damage: number): enemie {
         return new enemie(x, y, life, damage)
     }
 
     export class enemie {
+        kind: 'enemie' = 'enemie'
         x: number
         y: number
         life: number

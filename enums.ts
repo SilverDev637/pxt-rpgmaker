@@ -20,3 +20,13 @@ enum Objetives {
     //% block="heal user"
     HealUser = 6
 }
+enum TriggerActivation {
+    //% block="on spawn"
+    OnSpawn = 0,
+    //% block="on despawn"
+    OnDespawn = 1,
+    //% block="on step in"
+    OnStepIn = 2,
+    //% block="on step out"
+    OnStepOut = 3
+}

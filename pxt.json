@@ -10,7 +10,6 @@
         "main.blocks",
         "README.md",
         "enums.ts",
-        "rpgmaker.ts",
         "npcs.ts",
         "main.ts",
         "enemies.ts",
@@ -18,7 +17,8 @@
         "warps.ts",
         "maps.ts",
         "triggers.ts",
-        "items.ts"
+        "items.ts",
+        "rpgmaker.ts"
     ],
     "testFiles": [
         "test.ts"

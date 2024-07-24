@@ -1,4 +1,4 @@
-//% block="RPG - Warps"
+//% block="RPG - Warps" weight=5
 //% color="#004000" icon="\uf1e5"
 namespace Warps {
     //% block="create new warp at x$x y$y target at x$targetX y$targetY do transition?$doTransition to map id$targetMapId"
@@ -8,6 +8,7 @@ namespace Warps {
     }
 
     export class warp {
+        kind: 'warp' = 'warp'
         originX: number
         originY: number
         targetX: number

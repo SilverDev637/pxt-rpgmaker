@@ -1,6 +1,9 @@
-//% block="RPG Maker"
+//% block="RPG Maker" weight=11
 //% color="#004000" icon="\uf1e5"
 namespace RPGMaker {
+    //% block="append$element to map$id"
+    //% element.defl=element inlineInputMode=inline
+    //% element.shadow=variables_get
     export function appendToMap(element: Maps.map | NPCs.npc | Enemies.enemie | Stacks.stack | Warps.warp | Triggers.trigger, id: number) {
         if (element instanceof Maps.map) {
             __maps[id].blocks = element

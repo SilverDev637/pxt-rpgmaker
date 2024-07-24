@@ -1,4 +1,4 @@
-//% block="RPG - Items"
+//% block="RPG - Items" weight=6
 //% color="#004000" icon="\uf1e5"
 namespace Items {
     //% block="create new item name$name icon$icon is stackable?$stackable objetive$objetive"
@@ -10,6 +10,7 @@ namespace Items {
     }
 
     export class item {
+        kind: 'item' = 'item'
         name: string
         icon: Image
         stackable: boolean
