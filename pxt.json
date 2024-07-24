@@ -12,7 +12,12 @@
         "enums.ts",
         "rpgmaker.ts",
         "npcs.ts",
-        "main.ts"
+        "main.ts",
+        "enemies.ts",
+        "stacks.ts",
+        "warps.ts",
+        "maps.ts",
+        "triggers.ts"
     ],
     "testFiles": [
         "test.ts"
