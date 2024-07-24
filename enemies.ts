@@ -1,7 +1,7 @@
 //% block="RPG - Enemies"
 //% color="#004000" icon="\uf1e5"
 namespace Enemies {
-    //% block="create new npc on x$x y$y with dialog$dialog"
+    //% block="create new enemie on x$x y$y with life$life damage$damage"
     //% weight=100 color="#400040"
     export function createEnemie(x: number, y: number, life: number, damage: number): enemie {
         return new enemie(x, y, life, damage)

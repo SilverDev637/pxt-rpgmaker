@@ -17,7 +17,8 @@
         "stacks.ts",
         "warps.ts",
         "maps.ts",
-        "triggers.ts"
+        "triggers.ts",
+        "items.ts"
     ],
     "testFiles": [
         "test.ts"
