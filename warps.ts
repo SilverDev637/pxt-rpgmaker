@@ -9,21 +9,21 @@ namespace Warps {
 
     export class warp {
         kind: 'warp' = 'warp'
-        originX: number
-        originY: number
-        targetX: number
-        targetY: number
-        transition: boolean
-        targetMapId: number
-        on_teleport_event = () => {}
-        enabled = true
+        private _originX: number
+        private _originY: number
+        private _targetX: number
+        private _targetY: number
+        private _transition: boolean
+        private _targetMapId: number
+        private _on_teleport_event = () => {}
+        private _enabled = true
         constructor(originX: number, originY: number, targetX: number, targetY: number, doTransition: boolean, targetMapId: number) {
-            this.originX = originX
-            this.originY = originY
-            this.targetX = targetX
-            this.targetY = targetY
-            this.transition = doTransition
-            this.targetMapId = targetMapId
+            this._originX = originX
+            this._originY = originY
+            this._targetX = targetX
+            this._targetY = targetY
+            this._transition = doTransition
+            this._targetMapId = targetMapId
         }
 
         //% block="$this set origin x to$newX"
@@ -31,7 +31,7 @@ namespace Warps {
         //% this.defl=warp
         //% this.shadow=variables_get
         setOriginX(newX: number) {
-            this.originX = newX
+            this._originX = newX
         }
 
         //% block="$this set origin y to$newY"
@@ -39,7 +39,7 @@ namespace Warps {
         //% this.defl=warp
         //% this.shadow=variables_get
         setOriginY(newY: number) {
-            this.originY = newY
+            this._originY = newY
         }
 
         //% block="$this change origin x by$addX"
@@ -47,7 +47,7 @@ namespace Warps {
         //% this.defl=warp
         //% this.shadow=variables_get
         changeOriginX(addX: number) {
-            this.originX += addX
+            this._originX += addX
         }
 
         //% block="$this change origin y by$addY"
@@ -55,7 +55,7 @@ namespace Warps {
         //% this.defl=warp
         //% this.shadow=variables_get
         changeOriginY(addY: number) {
-            this.originY += addY
+            this._originY += addY
         }
 
         //% block="$this set origin to x$x y$y"
@@ -63,24 +63,24 @@ namespace Warps {
         //% this.defl=warp
         //% this.shadow=variables_get
         setOriginPosition(x: number, y: number) {
-            this.originX = x
-            this.originY = y
+            this._originX = x
+            this._originY = y
         }
 
         //% block="$this get origin x"
         //% weight=90 color="#400040"
         //% this.defl=warp
         //% this.shadow=variables_get
-        getOriginX(): number {
-            return this.originX
+        originX(): number {
+            return this._originX
         }
 
         //% block="$this get origin y"
         //% weight=85 color="#400040"
         //% this.defl=warp
         //% this.shadow=variables_get
-        getOriginY(): number {
-            return this.originY
+        originY(): number {
+            return this._originY
         }
 
         //% block="$this set target x to$newX"
@@ -88,7 +88,7 @@ namespace Warps {
         //% this.defl=warp
         //% this.shadow=variables_get
         setTargetX(newX: number) {
-            this.targetX = newX
+            this._targetX = newX
         }
 
         //% block="$this set target y to$newY"
@@ -96,7 +96,7 @@ namespace Warps {
         //% this.defl=warp
         //% this.shadow=variables_get
         setTargetY(newY: number) {
-            this.targetY = newY
+            this._targetY = newY
         }
 
         //% block="$this change target x by$addX"
@@ -104,7 +104,7 @@ namespace Warps {
         //% this.defl=warp
         //% this.shadow=variables_get
         changeTargetX(addX: number) {
-            this.targetX += addX
+            this._targetX += addX
         }
 
         //% block="$this change target y by$addY"
@@ -112,7 +112,7 @@ namespace Warps {
         //% this.defl=warp
         //% this.shadow=variables_get
         changeTargetY(addY: number) {
-            this.targetY += addY
+            this._targetY += addY
         }
 
         //% block="$this set target to x$x y$y"
@@ -120,24 +120,24 @@ namespace Warps {
         //% this.defl=warp
         //% this.shadow=variables_get
         setTargetPosition(x: number, y: number) {
-            this.targetX = x
-            this.targetY = y
+            this._targetX = x
+            this._targetY = y
         }
 
         //% block="$this get target x"
         //% weight=55 color="#400040"
         //% this.defl=warp
         //% this.shadow=variables_get
-        getTargetX(): number {
-            return this.targetX
+        targetX(): number {
+            return this._targetX
         }
 
         //% block="$this get target y"
         //% weight=50 color="#400040"
         //% this.defl=warp
         //% this.shadow=variables_get
-        getTargetY(): number {
-            return this.targetY
+        targetY(): number {
+            return this._targetY
         }
 
         //% block="$this enable transition?$transition"
@@ -145,7 +145,7 @@ namespace Warps {
         //% this.defl=warp
         //% this.shadow=variables_get
         enableTransition(transition: boolean) {
-            this.transition = transition
+            this._transition = transition
         }
 
         //% block="$this transition enabled?"
@@ -153,7 +153,7 @@ namespace Warps {
         //% this.defl=warp
         //% this.shadow=variables_get
         isTransitionEnabled(): boolean {
-            return this.transition
+            return this._transition
         }
 
         //% block="$this set target map id to$newMapId"
@@ -161,15 +161,15 @@ namespace Warps {
         //% this.defl=warp
         //% this.shadow=variables_get
         setTargetMap(newMapId: number) {
-            this.targetMapId = newMapId
+            this._targetMapId = newMapId
         }
 
         //% block="$this get target map id"
         //% weight=30 color="#400040"
         //% this.defl=warp
         //% this.shadow=variables_get
-        getTargetMap(): number {
-            return this.targetMapId
+        targetMap(): number {
+            return this._targetMapId
         }
 
         //% block="on $this teleport event"
@@ -177,7 +177,7 @@ namespace Warps {
         //% this.defl=warp
         //% this.shadow=variables_get
         onTeleportEvent(a: () => void) {
-            this.on_teleport_event = a
+            this._on_teleport_event = a
         }
 
         //% block="$this enable"
@@ -185,7 +185,7 @@ namespace Warps {
         //% this.defl=warp
         //% this.shadow=variables_get
         enable() {
-            this.enabled = true
+            this._enabled = true
         }
 
         //% block="$this disable"
@@ -193,7 +193,7 @@ namespace Warps {
         //% this.defl=warp
         //% this.shadow=variables_get
         disable() {
-            this.enabled = false
+            this._enabled = false
         }
 
         //% block="$this is enabled?"
@@ -201,7 +201,7 @@ namespace Warps {
         //% this.defl=warp
         //% this.shadow=variables_get
         isEnabled() {
-            return this.enabled
+            return this._enabled
         }
 
         //% block="$this is disabled?"
@@ -209,15 +209,7 @@ namespace Warps {
         //% this.defl=warp
         //% this.shadow=variables_get
         isDisabled() {
-            return !this.enabled
-        }
-
-        //% block="$this append to map number$id"
-        //% weight=20
-        //% this.defl=stack
-        //% this.shadow=variables_get
-        appendToMap(id: number) {
-            RPGMaker.appendToMap(this, id)
+            return !this._enabled
         }
     }
 }

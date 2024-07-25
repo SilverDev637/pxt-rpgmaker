@@ -9,17 +9,17 @@ namespace NPCs {
 
     export class npc {
         kind: 'npc' = 'npc'
-        dialog: string
-        x: number
-        y: number
-        on_interact = () => {}
-        enabled: boolean = true
-        display_mode: ElementDisplayMode = ElementDisplayMode.Local
+        private _dialog: string
+        private _x: number
+        private _y: number
+        private _on_interact = () => {}
+        private _enabled: boolean = true
+        private _display_mode: ElementDisplayMode = ElementDisplayMode.Local
 
         constructor(x: number, y: number, dialog: string) {
-            this.x = x
-            this.y = y
-            this.dialog = dialog
+            this._x = x
+            this._y = y
+            this._dialog = dialog
         }
 
         //% block="$this set x to$newX"
@@ -27,7 +27,7 @@ namespace NPCs {
         //% this.defl=npc
         //% this.shadow=variables_get
         setX(newX: number) {
-            this.x = newX
+            this._x = newX
         }
 
         //% block="$this set y to$newY"
@@ -35,7 +35,7 @@ namespace NPCs {
         //% this.defl=npc
         //% this.shadow=variables_get
         setY(newY: number) {
-            this.y = newY
+            this._y = newY
         }
         
         //% block="$this change x by$addX"
@@ -43,7 +43,7 @@ namespace NPCs {
         //% this.defl=npc
         //% this.shadow=variables_get
         changeX(addX: number) {
-            this.x += addX
+            this._x += addX
         }
 
         //% block="$this change y by$addY"
@@ -51,7 +51,7 @@ namespace NPCs {
         //% this.defl=npc
         //% this.shadow=variables_get
         changeY(addY: number) {
-            this.x += addY
+            this._x += addY
         }
 
         //% block="$this go to x$x y$y"
@@ -59,24 +59,24 @@ namespace NPCs {
         //% this.defl=npc
         //% this.shadow=variables_get
         goTo(x: number, y: number) {
-            this.x = x
-            this.y = y
+            this._x = x
+            this._y = y
         }
 
         //% block="$this get x"
         //% weight=70 color="#400040"
         //% this.defl=npc
         //% this.shadow=variables_get
-        getX(): number {
-            return this.x
+        x(): number {
+            return this._x
         }
 
         //% block="$this get y"
         //% weight=65 color="#400040"
         //% this.defl=npc
         //% this.shadow=variables_get
-        getY(): number {
-            return this.y
+        y(): number {
+            return this._y
         }
 
         //% block="$this set dialog to$newDialog"
@@ -84,15 +84,15 @@ namespace NPCs {
         //% this.defl=npc
         //% this.shadow=variables_get
         setDialog(newDialog: string) {
-            this.dialog = newDialog
+            this._dialog = newDialog
         }
 
         //% block="$this get dialog"
         //% weight=55 color="#400040"
         //% this.defl=npc
         //% this.shadow=variables_get
-        getDialog(): string {
-            return this.dialog
+        dialog(): string {
+            return this._dialog
         }
 
         //% block="on interact with $this"
@@ -100,7 +100,7 @@ namespace NPCs {
         //% this.defl=npc
         //% this.shadow=variables_get
         onInteractEvent(a: () => void) {
-            this.on_interact = a
+            this._on_interact = a
         }
 
         //% block="$this enable"
@@ -108,7 +108,7 @@ namespace NPCs {
         //% this.defl=npc
         //% this.shadow=variables_get
         enable() {
-            this.enabled = true
+            this._enabled = true
         }
 
         //% block="$this disable"
@@ -116,7 +116,7 @@ namespace NPCs {
         //% this.defl=npc
         //% this.shadow=variables_get
         disable() {
-            this.enabled = true
+            this._enabled = true
         }
 
         //% block="$this is enabled?"
@@ -124,7 +124,7 @@ namespace NPCs {
         //% this.defl=npc
         //% this.shadow=variables_get
         isEnabled(): boolean {
-            return this.enabled
+            return this._enabled
         }
 
         //% block="$this is disabled?"
@@ -132,7 +132,7 @@ namespace NPCs {
         //% this.defl=npc
         //% this.shadow=variables_get
         isDisabled(): boolean {
-            return !this.enabled
+            return !this._enabled
         }
 
         //% block="$this set display mode to$newDisplay"
@@ -141,15 +141,7 @@ namespace NPCs {
         //% this.shadow=variables_get
         //% newDisplay.defl=ElementDisplayMode.Local
         setDisplayMode(newDisplay: ElementDisplayMode) {
-            this.display_mode = newDisplay
-        }
-
-        //% block="$this append to map number$id"
-        //% weight=20
-        //% this.defl=npc
-        //% this.shadow=variables_get
-        appendToMap(id: number) {
-            RPGMaker.appendToMap(this, id)
+            this._display_mode = newDisplay
         }
     }
 }

@@ -11,31 +11,31 @@ namespace Items {
 
     export class item {
         kind: 'item' = 'item'
-        name: string
-        icon: Image
-        stackable: boolean
-        objetive: Objetives
-        multiplier = 0
-        on_use = () => {}
+        private _name: string
+        private _icon: Image
+        private _stackable: boolean
+        private _objetive: Objetives
+        private _multiplier = 0
+        private _on_use = () => {}
         constructor(name: string, icon: Image, stackable: boolean, objetive: Objetives) {
-            this.name = name
-            this.icon = icon
-            this.stackable = stackable
-            this.objetive = objetive
+            this._name = name
+            this._icon = icon
+            this._stackable = stackable
+            this._objetive = objetive
         }
 
         //% block="$this set name to$name"
         //% this.defl=item weight=95
         //% this.shadow=variables_get
         setName(newName: string) {
-            this.name = newName
+            this._name = newName
         }
 
         //% block="$this get name"
         //% this.defl=item weight=90 color="#400040"
         //% this.shadow=variables_get
-        getName(): string {
-            return this.name
+        name(): string {
+            return this._name
         }
 
         //% block="$this set icon to$newIcon"
@@ -44,49 +44,49 @@ namespace Items {
         //% newIcon.defl=myImage
         //% newIcon.shadow=variables_get
         setIcon(newIcon: Image) {
-            this.icon = newIcon
+            this._icon = newIcon
         }
 
         //% block="$this set stackable to$stackable"
         //% this.defl=item weight=80
         //% this.shadow=variables_get
         setStackable(stackable: boolean) {
-            this.stackable = stackable
+            this._stackable = stackable
         }
 
         //% block="$this is stackable?"
         //% this.defl=item weight=75 color="#400040"
         //% this.shadow=variables_get
         isStackable(): boolean {
-            return this.stackable
+            return this._stackable
         }
 
         //% block="$this set objetive to$newObjetive"
         //% this.defl=item weight=70
         //% this.shadow=variables_get
         setObjetive(newObjetive: Objetives) {
-            this.objetive = newObjetive
+            this._objetive = newObjetive
         }
 
         //% block="$this get objetive"
         //% this.defl=item weight=65 color="#400040"
         //% this.shadow=variables_get
-        getObjetive(): number {
-            return this.objetive
+        objetive(): number {
+            return this._objetive
         }
 
         //% block="$this set multiplier to$value"
         //% this.defl=item weight=60
         //% this.shadow=variables_get
         setMultiplier(value: number) {
-            this.multiplier = value
+            this._multiplier = value
         }
 
         //% block="$this get multiplier"
         //% this.defl=item weight=55 color="#400040"
         //% this.shadow=variables_get
-        getMultiplier(): number {
-            return this.multiplier
+        multiplier(): number {
+            return this._multiplier
         }
 
         //% block="on use $this"
@@ -94,7 +94,7 @@ namespace Items {
         //% this.defl=item
         //% this.shadow=variables_get
         onUseEven(a: () => void) {
-            this.on_use = a
+            this._on_use = a
         }
     }
 }

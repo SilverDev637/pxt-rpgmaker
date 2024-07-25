@@ -9,16 +9,16 @@ namespace Stacks {
 
     export class stack {
         kind: 'stack' = 'stack'
-        x: number
-        y: number
-        content: Items.item[]
-        on_pickup = () => { }
-        enabled: boolean = true
-        display_mode: ElementDisplayMode = ElementDisplayMode.Local
+        private _x: number
+        private _y: number
+        private _content: Items.item[] = [null, null, null, null, null, null, null, null, null, null, null]
+        private _on_pickup = () => { }
+        private _enabled: boolean = true
+        private _display_mode: ElementDisplayMode = ElementDisplayMode.Local
 
         constructor(x: number, y: number) {
-            this.x = x
-            this.y = y
+            this._x = x
+            this._y = y
         }
 
         //% block="$this set x to$newX"
@@ -26,7 +26,7 @@ namespace Stacks {
         //% this.defl=stack
         //% this.shadow=variables_get
         setX(newX: number) {
-            this.x = newX
+            this._x = newX
         }
 
         //% block="$this set y to$newY"
@@ -34,7 +34,7 @@ namespace Stacks {
         //% this.defl=stack
         //% this.shadow=variables_get
         setY(newY: number) {
-            this.y = newY
+            this._y = newY
         }
 
         //% block="$this change x by$addX"
@@ -42,7 +42,7 @@ namespace Stacks {
         //% this.defl=stack
         //% this.shadow=variables_get
         changeX(addX: number) {
-            this.x += addX
+            this._x += addX
         }
 
         //% block="$this change y by$addY"
@@ -50,7 +50,7 @@ namespace Stacks {
         //% this.defl=stack
         //% this.shadow=variables_get
         changeY(addY: number) {
-            this.x += addY
+            this._x += addY
         }
 
         //% block="$this go to x$x y$y"
@@ -58,43 +58,43 @@ namespace Stacks {
         //% this.defl=stack
         //% this.shadow=variables_get
         goTo(x: number, y: number) {
-            this.x = x
-            this.y = y
+            this._x = x
+            this._y = y
         }
 
         //% block="$this get x"
         //% weight=70 color="#400040"
         //% this.defl=stack
         //% this.shadow=variables_get
-        getX(): number {
-            return this.x
+        x(): number {
+            return this._x
         }
 
         //% block="$this get y"
         //% weight=65 color="#400040"
         //% this.defl=stack
         //% this.shadow=variables_get
-        getY(): number {
-            return this.y
+        y(): number {
+            return this._y
         }
 
-        //% block="$this append items$item|| $item1 $item2 $item3 $item4 $item5 $item6 $item7 $item8 $item9"
+        //% block="$this append item$item"
         //% weight=60
         //% this.defl=stack
-        //% item.defl=item item1.defl=item item2.defl=item item3.defl=item item4.defl=item item5.defl=item item6.defl=item item7.defl=item item8.defl=item item9.defl=item
-        //% item.shadow=variables_get item1.shadow=variables_get item2.shadow=variables_get item3.shadow=variables_get item4.shadow=variables_get item5.shadow=variables_get item6.shadow=variables_get item7.shadow=variables_get item8.shadow=variables_get item9.shadow=variables_get
+        //% item.defl=item
+        //% item.shadow=variables_get
         //% this.shadow=variables_get inlineInputMode=inline
-        setDialog(item: Items.item, item1?: Items.item, item2?: Items.item, item3?: Items.item, item4?: Items.item, item5?: Items.item, item6?: Items.item, item7?: Items.item, item8?: Items.item, item9?: Items.item) {
-            this.content.push(item)
-            if (item1 == null) { this.content.push(item1) }
-            if (item2 == null) { this.content.push(item2) }
-            if (item3 == null) { this.content.push(item3) }
-            if (item4 == null) { this.content.push(item4) }
-            if (item5 == null) { this.content.push(item5) }
-            if (item6 == null) { this.content.push(item6) }
-            if (item7 == null) { this.content.push(item7) }
-            if (item8 == null) { this.content.push(item8) }
-            if (item9 == null) { this.content.push(item9) }
+        appendItem(item: Items.item) {
+            let min_index = -1
+            for (let i = 0; i < this._content.length; i++) {
+                if (this._content[i] == null) {
+                    min_index = i
+                    break
+                }
+            }
+            if (min_index > -1) {
+                this._content[min_index] = item
+            }
         }
 
         //% block="$this remove item at$index"
@@ -102,7 +102,7 @@ namespace Stacks {
         //% this.defl=stack
         //% this.shadow=variables_get
         removeItemAt(index: number) {
-            this.content.removeAt(index)
+            this._content[index] = null
         }
 
         //% block="$this remove element$item"
@@ -112,15 +112,29 @@ namespace Stacks {
         //% item.defl=item
         //% item.shadow=variables_get
         removeItemElement(item: Items.item) {
-            this.content.removeElement(item)
+            this._content[this._content.indexOf(item)] = null
         }
 
-        //% block="on interact with $this"
+        //% block="$this content"
+        //% weight=52
+        //% this.defl=stack
+        //% this.shadow=variables_get
+        content(): Items.item[] {
+            let content: Items.item[] = []
+            for (let i of this._content) {
+                if (i != null) {
+                    content.push(i)
+                }
+            }
+            return content
+        }
+
+        //% block="on pick $this up"
         //% weight=50 blockAllowMultiple=1 afterOnStart=true
         //% this.defl=stack
         //% this.shadow=variables_get
         onPickUpEvent(a: () => void) {
-            this.on_pickup = a
+            this._on_pickup = a
         }
 
         //% block="$this enable"
@@ -128,7 +142,7 @@ namespace Stacks {
         //% this.defl=stack
         //% this.shadow=variables_get
         enable() {
-            this.enabled = true
+            this._enabled = true
         }
 
         //% block="$this disable"
@@ -136,7 +150,7 @@ namespace Stacks {
         //% this.defl=stack
         //% this.shadow=variables_get
         disable() {
-            this.enabled = true
+            this._enabled = true
         }
 
         //% block="$this is enabled?"
@@ -144,7 +158,7 @@ namespace Stacks {
         //% this.defl=stack
         //% this.shadow=variables_get
         isEnabled(): boolean {
-            return this.enabled
+            return this._enabled
         }
 
         //% block="$this is disabled?"
@@ -152,7 +166,7 @@ namespace Stacks {
         //% this.defl=stack
         //% this.shadow=variables_get
         isDisabled(): boolean {
-            return !this.enabled
+            return !this._enabled
         }
 
         //% block="$this set display mode to$newDisplay"
@@ -161,15 +175,7 @@ namespace Stacks {
         //% this.shadow=variables_get
         //% newDisplay.defl=ElementDisplayMode.Local
         setDisplayMode(newDisplay: ElementDisplayMode) {
-            this.display_mode = newDisplay
-        }
-
-        //% block="$this append to map number$id"
-        //% weight=20
-        //% this.defl=stack
-        //% this.shadow=variables_get
-        appendToMap(id: number) {
-            RPGMaker.appendToMap(this, id)
+            this._display_mode = newDisplay
         }
     }
 }

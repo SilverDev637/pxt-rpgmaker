@@ -30,3 +30,21 @@ enum TriggerActivation {
     //% block="on step out"
     OnStepOut = 3
 }
+enum LedStates {
+    //% block="on"
+    On = 1,
+    //% block="off"
+    Off = 0
+}
+enum MapElements {
+    //% block="npc"
+    NPC = 0,
+    //% block="enemie"
+    Enemie = 1,
+    //% block="stack"
+    Stack = 2,
+    //% block="warp"
+    Warp = 3,
+    //% block="trigger"
+    Trigger = 4
+}

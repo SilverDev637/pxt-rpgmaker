@@ -9,19 +9,19 @@ namespace Enemies {
 
     export class enemie {
         kind: 'enemie' = 'enemie'
-        x: number
-        y: number
-        life: number
-        damage: number
-        on_death = () => { }
-        enabled: boolean = true
-        display_mode: ElementDisplayMode = ElementDisplayMode.Local
+        private _x: number
+        private _y: number
+        private _life: number
+        private _damage: number
+        private _on_death = () => { }
+        private _enabled: boolean = true
+        private _display_mode: ElementDisplayMode = ElementDisplayMode.Local
 
         constructor(x: number, y: number, life: number, damage: number) {
-            this.x = x
-            this.y = y
-            this.life = life
-            this.damage = damage
+            this._x = x
+            this._y = y
+            this._life = life
+            this._damage = damage
         }
 
         //% block="$this set x to$newX"
@@ -29,7 +29,7 @@ namespace Enemies {
         //% this.defl=enemie
         //% this.shadow=variables_get
         setX(newX: number) {
-            this.x = newX
+            this._x = newX
         }
 
         //% block="$this set y to$newY"
@@ -37,7 +37,7 @@ namespace Enemies {
         //% this.defl=enemie
         //% this.shadow=variables_get
         setY(newY: number) {
-            this.y = newY
+            this._y = newY
         }
 
         //% block="$this change x by$addX"
@@ -45,7 +45,7 @@ namespace Enemies {
         //% this.defl=enemie
         //% this.shadow=variables_get
         changeX(addX: number) {
-            this.x += addX
+            this._x += addX
         }
 
         //% block="$this change y by$addY"
@@ -53,7 +53,7 @@ namespace Enemies {
         //% this.defl=enemie
         //% this.shadow=variables_get
         changeY(addY: number) {
-            this.x += addY
+            this._x += addY
         }
 
         //% block="$this go to x$x y$y"
@@ -61,24 +61,24 @@ namespace Enemies {
         //% this.defl=enemie
         //% this.shadow=variables_get
         goTo(x: number, y: number) {
-            this.x = x
-            this.y = y
+            this._x = x
+            this._y = y
         }
 
         //% block="$this get x"
         //% weight=70 color="#400040"
         //% this.defl=enemie
         //% this.shadow=variables_get
-        getX(): number {
-            return this.x
+        x(): number {
+            return this._x
         }
 
         //% block="$this get y"
         //% weight=65 color="#400040"
         //% this.defl=enemie
         //% this.shadow=variables_get
-        getY(): number {
-            return this.y
+        y(): number {
+            return this._y
         }
 
         //% block="$this set life to$newLife"
@@ -86,15 +86,15 @@ namespace Enemies {
         //% this.defl=enemie
         //% this.shadow=variables_get
         setLife(newLife: number) {
-            this.life = newLife
+            this._life = newLife
         }
 
         //% block="$this get life"
         //% weight=55 color="#400040"
         //% this.defl=enemie
         //% this.shadow=variables_get
-        getLife(): number {
-            return this.life
+        life(): number {
+            return this._life
         }
 
         //% block="$this set damage to$newDamage"
@@ -102,15 +102,15 @@ namespace Enemies {
         //% this.defl=enemie
         //% this.shadow=variables_get
         setDamage(newDamage: number) {
-            this.damage = newDamage
+            this._damage = newDamage
         }
 
         //% block="$this get damage"
         //% weight=53 color="#400040"
         //% this.defl=enemie
         //% this.shadow=variables_get
-        getDamage(): number {
-            return this.damage
+        damage(): number {
+            return this._damage
         }
 
         //% block="$this on death"
@@ -118,7 +118,7 @@ namespace Enemies {
         //% this.defl=enemie
         //% this.shadow=variables_get
         onDeath(a: () => void) {
-            this.on_death = a
+            this._on_death = a
         }
 
         //% block="$this enable"
@@ -126,7 +126,7 @@ namespace Enemies {
         //% this.defl=enemie
         //% this.shadow=variables_get
         enable() {
-            this.enabled = true
+            this._enabled = true
         }
 
         //% block="$this disable"
@@ -134,7 +134,7 @@ namespace Enemies {
         //% this.defl=enemie
         //% this.shadow=variables_get
         disable() {
-            this.enabled = true
+            this._enabled = true
         }
 
         //% block="$this is enabled?"
@@ -142,7 +142,7 @@ namespace Enemies {
         //% this.defl=enemie
         //% this.shadow=variables_get
         isEnabled(): boolean {
-            return this.enabled
+            return this._enabled
         }
 
         //% block="$this is disabled?"
@@ -150,7 +150,7 @@ namespace Enemies {
         //% this.defl=enemie
         //% this.shadow=variables_get
         isDisabled(): boolean {
-            return !this.enabled
+            return !this._enabled
         }
 
         //% block="$this set display mode to$newDisplay"
@@ -159,15 +159,7 @@ namespace Enemies {
         //% this.shadow=variables_get
         //% newDisplay.defl=ElementDisplayMode.Local
         setDisplayMode(newDisplay: ElementDisplayMode) {
-            this.display_mode = newDisplay
-        }
-
-        //% block="$this append to map number$id"
-        //% weight=20
-        //% this.defl=enemie
-        //% this.shadow=variables_get
-        appendToMap(id: number) {
-            RPGMaker.appendToMap(this, id)
+            this._display_mode = newDisplay
         }
     }
 }
