@@ -18,7 +18,9 @@
         "maps.ts",
         "triggers.ts",
         "items.ts",
-        "rpgmaker.ts"
+        "rpgmaker.ts",
+        "menus.ts",
+        "guis.ts"
     ],
     "testFiles": [
         "test.ts"
