@@ -1,8 +1,8 @@
-//% block="RPG - Triggers" weight=4
-//% color="#004000" icon="\uf1e5"
+//% block="RPG - Triggers" weight=1
+//% color="#aa9118" icon="\uf1e5"
 namespace Triggers {
     //% block="create new trigger at x$x y$y target at x$targetX y$targetY do transition?$doTransition to map id$targetMapId"
-    //% inlineInputMode=inline weight=120 color="#400040"
+    //% inlineInputMode=inline weight=120 color="#906d23"
     export function createTrigger(x: number, y: number, activation: TriggerActivation): trigger {
         return new trigger(x, y, activation)
     }
@@ -63,7 +63,7 @@ namespace Triggers {
         }
 
         //% block="$this get x"
-        //% weight=70 color="#400040"
+        //% weight=70 color="#906d23"
         //% this.defl=trigger
         //% this.shadow=variables_get
         x(): number {
@@ -71,7 +71,7 @@ namespace Triggers {
         }
 
         //% block="$this get y"
-        //% weight=65 color="#400040"
+        //% weight=65 color="#906d23"
         //% this.defl=trigger
         //% this.shadow=variables_get
         y(): number {
@@ -87,7 +87,7 @@ namespace Triggers {
         }
 
         //% block="$this get activation"
-        //% weight=55 color="#400040"
+        //% weight=55 color="#906d23"
         //% this.defl=trigger
         //% this.shadow=variables_get
         activation(): number {
@@ -119,7 +119,7 @@ namespace Triggers {
         }
 
         //% block="$this is enabled?"
-        //% weight=35 color="#400040"
+        //% weight=35 color="#906d23"
         //% this.defl=trigger
         //% this.shadow=variables_get
         isEnabled(): boolean {
@@ -127,7 +127,7 @@ namespace Triggers {
         }
 
         //% block="$this is disabled?"
-        //% weight=30 color="#400040"
+        //% weight=30 color="#906d23"
         //% this.defl=trigger
         //% this.shadow=variables_get
         isDisabled(): boolean {

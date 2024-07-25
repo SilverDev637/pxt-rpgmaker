@@ -1,10 +1,10 @@
-//% block="RPG - Items" weight=6
-//% color="#004000" icon="\uf1e5"
+//% block="RPG - Items" weight=3
+//% color="#686482" icon="\uf1e5"
 namespace Items {
     //% block="create new item name$name icon$icon is stackable?$stackable objetive$objetive"
     //% icon.defl=myImage
     //% icon.shadow=variables_get
-    //% weight=100 color="#400040"
+    //% weight=100 color="#5b436d"
     export function createItem(name: string, icon: Image, stackable: boolean, objetive: Objetives): item {
         return new item(name, icon, stackable, objetive)
     }
@@ -32,7 +32,7 @@ namespace Items {
         }
 
         //% block="$this get name"
-        //% this.defl=item weight=90 color="#400040"
+        //% this.defl=item weight=90 color="#5b436d"
         //% this.shadow=variables_get
         name(): string {
             return this._name
@@ -55,7 +55,7 @@ namespace Items {
         }
 
         //% block="$this is stackable?"
-        //% this.defl=item weight=75 color="#400040"
+        //% this.defl=item weight=75 color="#5b436d"
         //% this.shadow=variables_get
         isStackable(): boolean {
             return this._stackable
@@ -69,7 +69,7 @@ namespace Items {
         }
 
         //% block="$this get objetive"
-        //% this.defl=item weight=65 color="#400040"
+        //% this.defl=item weight=65 color="#5b436d"
         //% this.shadow=variables_get
         objetive(): number {
             return this._objetive
@@ -83,7 +83,7 @@ namespace Items {
         }
 
         //% block="$this get multiplier"
-        //% this.defl=item weight=55 color="#400040"
+        //% this.defl=item weight=55 color="#5b436d"
         //% this.shadow=variables_get
         multiplier(): number {
             return this._multiplier

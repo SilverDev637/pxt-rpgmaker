@@ -1,5 +1,5 @@
-//% block="RPG - Global" weight=9
-//% color="#004000" icon="\uf1e5"
+//% block="RPG - Global" weight=10
+//% color="#584D3D" icon="\uf1e5"
 namespace RPGMaker {
     export let _ingame_sprites_blocks: game.LedSprite[] = []
     export let _ingame_sprites_npcs: game.LedSprite[] = []
@@ -14,6 +14,7 @@ namespace RPGMaker {
     let _maps: Maps.map[] = []
     let _current_map: Maps.map
 
+    //% block="delete all from screen"
     export function deleteAll() {
         for (let i of _ingame_sprites_blocks) { i.delete() }
         _ingame_sprites_blocks = []
@@ -29,6 +30,7 @@ namespace RPGMaker {
         _ingame_disabled_triggers = []
     }
 
+    //% block="turn elements on"
     export function turnOn() {
         for (let i of _ingame_sprites_blocks) {
             i.setBrightness(196)
@@ -50,6 +52,7 @@ namespace RPGMaker {
         _ingame_disabled_triggers = []
     }
 
+    //% block="turn elements off"
     export function turnOff() {
         for (let i of _ingame_sprites_blocks) { i.off() }
         for (let i of _ingame_sprites_npcs) { i.off() }

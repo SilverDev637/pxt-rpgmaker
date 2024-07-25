@@ -1,4 +1,4 @@
-//% block="RPG - Maps" weight=10
+//% block="RPG - Maps" weight=9
 //% color="#004000" icon="\uf1e5"
 namespace Maps {
     //% block="create new map blocks$blocks with id$id"

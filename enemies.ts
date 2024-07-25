@@ -1,8 +1,8 @@
-//% block="RPG - Enemies" weight=8
-//% color="#004000" icon="\uf1e5"
+//% block="RPG - Enemies" weight=5
+//% color="#AD4225" icon="\uf1e5"
 namespace Enemies {
     //% block="create new enemie on x$x y$y with life$life damage$damage"
-    //% weight=100 color="#400040" inlineInputMode=inline
+    //% weight=100 color="#892c2f" inlineInputMode=inline
     export function createEnemie(x: number, y: number, life: number, damage: number): enemie {
         return new enemie(x, y, life, damage)
     }
@@ -66,7 +66,7 @@ namespace Enemies {
         }
 
         //% block="$this get x"
-        //% weight=70 color="#400040"
+        //% weight=70 color="#892c2f"
         //% this.defl=enemie
         //% this.shadow=variables_get
         x(): number {
@@ -74,7 +74,7 @@ namespace Enemies {
         }
 
         //% block="$this get y"
-        //% weight=65 color="#400040"
+        //% weight=65 color="#892c2f"
         //% this.defl=enemie
         //% this.shadow=variables_get
         y(): number {
@@ -90,7 +90,7 @@ namespace Enemies {
         }
 
         //% block="$this get life"
-        //% weight=55 color="#400040"
+        //% weight=55 color="#892c2f"
         //% this.defl=enemie
         //% this.shadow=variables_get
         life(): number {
@@ -106,7 +106,7 @@ namespace Enemies {
         }
 
         //% block="$this get damage"
-        //% weight=53 color="#400040"
+        //% weight=53 color="#892c2f"
         //% this.defl=enemie
         //% this.shadow=variables_get
         damage(): number {
@@ -138,7 +138,7 @@ namespace Enemies {
         }
 
         //% block="$this is enabled?"
-        //% weight=35 color="#400040"
+        //% weight=35 color="#892c2f"
         //% this.defl=enemie
         //% this.shadow=variables_get
         isEnabled(): boolean {
@@ -146,7 +146,7 @@ namespace Enemies {
         }
 
         //% block="$this is disabled?"
-        //% weight=30 color="#400040"
+        //% weight=30 color="#892c2f"
         //% this.defl=enemie
         //% this.shadow=variables_get
         isDisabled(): boolean {

@@ -1,8 +1,8 @@
-//% block="RPG - Warps" weight=5
-//% color="#004000" icon="\uf1e5"
+//% block="RPG - Warps" weight=2
+//% color="#735290" icon="\uf1e5"
 namespace Warps {
     //% block="create new warp at x$x y$y target at x$targetX y$targetY do transition?$doTransition to map id$targetMapId"
-    //% inlineInputMode=inline weight=120 color="#400040"
+    //% inlineInputMode=inline weight=120 color="#623775"
     export function createWarp(x: number, y: number, targetX: number, targetY: number, doTransition: boolean, targetMapId: number) {
         return new warp(x, y, targetX, targetY, doTransition, targetMapId)
     }
@@ -68,7 +68,7 @@ namespace Warps {
         }
 
         //% block="$this get origin x"
-        //% weight=90 color="#400040"
+        //% weight=90 color="#623775"
         //% this.defl=warp
         //% this.shadow=variables_get
         originX(): number {
@@ -76,7 +76,7 @@ namespace Warps {
         }
 
         //% block="$this get origin y"
-        //% weight=85 color="#400040"
+        //% weight=85 color="#623775"
         //% this.defl=warp
         //% this.shadow=variables_get
         originY(): number {
@@ -125,7 +125,7 @@ namespace Warps {
         }
 
         //% block="$this get target x"
-        //% weight=55 color="#400040"
+        //% weight=55 color="#623775"
         //% this.defl=warp
         //% this.shadow=variables_get
         targetX(): number {
@@ -133,7 +133,7 @@ namespace Warps {
         }
 
         //% block="$this get target y"
-        //% weight=50 color="#400040"
+        //% weight=50 color="#623775"
         //% this.defl=warp
         //% this.shadow=variables_get
         targetY(): number {
@@ -149,7 +149,7 @@ namespace Warps {
         }
 
         //% block="$this transition enabled?"
-        //% weight=40 color="#400040"
+        //% weight=40 color="#623775"
         //% this.defl=warp
         //% this.shadow=variables_get
         isTransitionEnabled(): boolean {
@@ -165,7 +165,7 @@ namespace Warps {
         }
 
         //% block="$this get target map id"
-        //% weight=30 color="#400040"
+        //% weight=30 color="#623775"
         //% this.defl=warp
         //% this.shadow=variables_get
         targetMap(): number {

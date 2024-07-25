@@ -1,8 +1,8 @@
-//% block="RPG - NPCs" weight=9
-//% color="#004000" icon="\uf1e5"
+//% block="RPG - NPCs" weight=6
+//% color="#44964d" icon="\uf1e5"
 namespace NPCs {
     //% block="create new npc on x$x y$y with dialog$dialog"
-    //% weight=100 color="#400040" inlineInputMode=inline
+    //% weight=100 color="#434c48" inlineInputMode=inline
     export function createNPC(x: number, y: number, dialog: string): npc {
         return new npc(x, y, dialog)
     }
@@ -64,7 +64,7 @@ namespace NPCs {
         }
 
         //% block="$this get x"
-        //% weight=70 color="#400040"
+        //% weight=70 color="#434c48"
         //% this.defl=npc
         //% this.shadow=variables_get
         x(): number {
@@ -72,7 +72,7 @@ namespace NPCs {
         }
 
         //% block="$this get y"
-        //% weight=65 color="#400040"
+        //% weight=65 color="#434c48"
         //% this.defl=npc
         //% this.shadow=variables_get
         y(): number {
@@ -88,7 +88,7 @@ namespace NPCs {
         }
 
         //% block="$this get dialog"
-        //% weight=55 color="#400040"
+        //% weight=55 color="#434c48"
         //% this.defl=npc
         //% this.shadow=variables_get
         dialog(): string {
@@ -120,7 +120,7 @@ namespace NPCs {
         }
 
         //% block="$this is enabled?"
-        //% weight=35 color="#400040"
+        //% weight=35 color="#434c48"
         //% this.defl=npc
         //% this.shadow=variables_get
         isEnabled(): boolean {
@@ -128,7 +128,7 @@ namespace NPCs {
         }
 
         //% block="$this is disabled?"
-        //% weight=30 color="#400040"
+        //% weight=30 color="#434c48"
         //% this.defl=npc
         //% this.shadow=variables_get
         isDisabled(): boolean {

@@ -1,8 +1,8 @@
-//% block="RPG - Stacks" weight=7
-//% color="#004000" icon="\uf1e5"
+//% block="RPG - Stacks" weight=4
+//% color="#5649a8" icon="\uf1e5"
 namespace Stacks {
     //% block="create new stack on x$x y$y"
-    //% weight=100 color="#400040" inlineInputMode=inline
+    //% weight=100 color="#51378e" inlineInputMode=inline
     export function createStack(x: number, y: number): stack {
         return new stack(x, y)
     }
@@ -63,7 +63,7 @@ namespace Stacks {
         }
 
         //% block="$this get x"
-        //% weight=70 color="#400040"
+        //% weight=70 color="#51378e"
         //% this.defl=stack
         //% this.shadow=variables_get
         x(): number {
@@ -71,7 +71,7 @@ namespace Stacks {
         }
 
         //% block="$this get y"
-        //% weight=65 color="#400040"
+        //% weight=65 color="#51378e"
         //% this.defl=stack
         //% this.shadow=variables_get
         y(): number {
@@ -154,7 +154,7 @@ namespace Stacks {
         }
 
         //% block="$this is enabled?"
-        //% weight=35 color="#400040"
+        //% weight=35 color="#51378e"
         //% this.defl=stack
         //% this.shadow=variables_get
         isEnabled(): boolean {
@@ -162,7 +162,7 @@ namespace Stacks {
         }
 
         //% block="$this is disabled?"
-        //% weight=30 color="#400040"
+        //% weight=30 color="#51378e"
         //% this.defl=stack
         //% this.shadow=variables_get
         isDisabled(): boolean {
