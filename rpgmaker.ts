@@ -1,4 +1,4 @@
-//% block="RPG - Global" weight=10
+//% block="RPG - Global" weight=11
 //% color="#584D3D" icon="\uf1e5"
 namespace RPGMaker {
     export let _ingame_sprites_blocks: game.LedSprite[] = []
@@ -8,11 +8,37 @@ namespace RPGMaker {
     export let _ingame_enabled_warps: Warps.warp[] = []
     export let _ingame_enabled_triggers: Triggers.trigger[] = []
 
-    export let _ingame_disabled_warps: Warps.warp[] = []
-    export let _ingame_disabled_triggers: Triggers.trigger[] = []
+    let _ingame_disabled_warps: Warps.warp[] = []
+    let _ingame_disabled_triggers: Triggers.trigger[] = []
 
     let _maps: Maps.map[] = []
     let _current_map: Maps.map
+
+    //% block="state of led x$x y$y"
+    //% color="#50333f"
+    export function ledState(x: number, y: number): boolean {
+        for (let block of _ingame_sprites_blocks) {
+            if (block.x() == x && block.y() == y) {
+                return true
+            }
+        }
+        for (let npc of _ingame_sprites_npcs) {
+            if (npc.x() == x && npc.y() == y) {
+                return true
+            }
+        }
+        for (let enemie of _ingame_sprites_enemies) {
+            if (enemie.x() == x && enemie.y() == y) {
+                return true
+            }
+        }
+        for (let stack of _ingame_sprites_stacks) {
+            if (stack.sprite.x() == x && stack.sprite.y() == y) {
+                return true
+            }
+        }
+        return false
+    }
 
     //% block="delete all from screen"
     export function deleteAll() {

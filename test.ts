@@ -33,14 +33,22 @@ let item1 = Items.createItem(
     Objetives.DamageEnemie
 )
 let warp = Warps.createWarp(0, 2, 4, 2, true, 0)
+let trigger = Triggers.createTrigger(2, 3, TriggerActivation.OnStepIn)
+let player = Player.createPlayer(2, 2)
+player.enableMovementControls()
+
+stack.appendItem(item)
+
 map.appendElement(enemie)
 map.appendElement(npc)
-stack.appendItem(item)
 map.appendElement(stack)
+map.appendElement(warp)
+map.appendElement(trigger)
 map.plotElements()
 
 basic.pause(1000)
 RPGMaker.turnOff()
 RPGMaker.turnOff()
 basic.pause(1000)
+RPGMaker.turnOn()
 RPGMaker.turnOn()

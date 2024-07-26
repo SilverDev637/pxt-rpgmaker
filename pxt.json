@@ -18,7 +18,8 @@
         "items.ts",
         "rpgmaker.ts",
         "menus.ts",
-        "ui.ts"
+        "ui.ts",
+        "player.ts"
     ],
     "testFiles": [
         "test.ts"
