@@ -1,10 +1,17 @@
-let map = Maps.createMap(images.createImage(`
+let map2 = Maps.createMap(images.createImage(`
     # # # # #
     # . . . #
     . . . . #
     # . . . #
     # # # # #
-    `), 2)
+    `), 1)
+let map1 = Maps.createMap(images.createImage(`
+    # # # # #
+    # . . . #
+    # . . . .
+    # . . . #
+    # # # # #
+    `), 0)
 let npc = NPCs.createNPC(1, 1, "HOLA, MUNDO")
 let enemie = Enemies.createEnemie(2, 1, 5, 5)
 let stack = Stacks.createStack(3, 1)
@@ -32,23 +39,18 @@ let item1 = Items.createItem(
     false,
     Objetives.DamageEnemie
 )
-let warp = Warps.createWarp(0, 2, 4, 2, true, 0)
-let trigger = Triggers.createTrigger(2, 3, TriggerActivation.OnStepIn)
-let player = Player.createPlayer(2, 2)
-player.enableMovementControls()
+let warp2 = Warps.createWarp(0, 2, 4, 2, true, 0)
+let warp1 = Warps.createWarp(4, 2, 0, 2, true, 1)
+let trigger = Triggers.createTrigger(2, 3, TriggerActivation.OnStepIn, -1)
+let playe = Player.createPlayer(2, 2)
+playe.enableMovementControls()
 
 stack.appendItem(item)
 
-map.appendElement(enemie)
-map.appendElement(npc)
-map.appendElement(stack)
-map.appendElement(warp)
-map.appendElement(trigger)
-map.plotElements()
-
-basic.pause(1000)
-RPGMaker.turnOff()
-RPGMaker.turnOff()
-basic.pause(1000)
-RPGMaker.turnOn()
-RPGMaker.turnOn()
+map2.appendElement(enemie)
+map2.appendElement(npc)
+map2.appendElement(stack)
+map2.appendElement(warp2)
+map2.appendElement(trigger)
+map1.appendElement(warp1)
+map2.plotElements()

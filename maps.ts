@@ -175,7 +175,7 @@ namespace Maps {
             for (let i = 0; i < this._warps.length; i++) {
                 let warp = this._warps[i]
                 if (warp.isEnabled()) {
-                    RPGMaker._ingame_enabled_warps.push(warp)
+                    RPGMaker._appendWarp(warp)
                 }
             }
             this._displaying_warps = true
@@ -190,7 +190,7 @@ namespace Maps {
             for (let i = 0; i < this._triggers.length; i++) {
                 let trigger = this._triggers[i]
                 if (trigger.isEnabled()) {
-                    RPGMaker._ingame_enabled_triggers.push(trigger)
+                    RPGMaker._appendTrigger(trigger)
                 }
             }
             this._displaying_triggers = true

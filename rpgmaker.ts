@@ -7,14 +7,71 @@ namespace RPGMaker {
     export let _ingame_sprites_stacks: {sprite: game.LedSprite; brightness: number}[] = []
     export let _ingame_enabled_warps: Warps.warp[] = []
     export let _ingame_enabled_triggers: Triggers.trigger[] = []
+    export let _player: game.LedSprite
 
     let _ingame_disabled_warps: Warps.warp[] = []
     let _ingame_disabled_triggers: Triggers.trigger[] = []
 
     let _maps: Maps.map[] = []
-    let _current_map: Maps.map
+    let _current_map: number
+
+    export function _appendWarp(warp: Warps.warp) {
+        _ingame_enabled_warps.push(warp)
+    }
+
+    export function _appendTrigger(trigger: Triggers.trigger) {
+        _ingame_enabled_triggers.push(trigger)
+    }
+
+    //% block="fade in $msms"
+    export function fadeIn(ms: number) {
+        for (let i = 0; i < 255; i+=255/ms) {
+            led.setBrightness(i)
+            basic.pause(1)
+        }
+    }
+
+    //% block="fade out $msms"
+    export function fadeOut(ms: number) {
+        for (let i = 255; i > 0; i -= 255 / ms) {
+            led.setBrightness(i)
+            basic.pause(1)
+        }
+    }
+
+    //% block="check for warps on x$x y$y"
+    //% x.min=0 x.max=4 y.min=0 y.max=4
+    export function checkForWarps(x: number, y: number) {
+        for (let i = 0; i < _ingame_enabled_warps.length; i++) {
+            let warp = _ingame_enabled_warps[i]
+            if (warp.isEnabled() && warp.originX() == x && warp.originY() == y) {
+                try {
+                    checkForTriggers(TriggerActivation.OnDespawn, 0, 0)
+                    if (warp.isTransitionEnabled()) { fadeOut(100) }
+                    deleteAll()
+                    _player.goTo(warp.targetX(), warp.targetY())
+                    _maps[warp.targetMap()].plotElements()
+                    if (warp.isTransitionEnabled()) { fadeIn(100) }
+                    checkForTriggers(TriggerActivation.OnSpawn, 0, 0)
+                } catch {}
+            }
+        } 
+    }
+
+    //% block="check for triggers with method$method on x$x y$y"
+    //% x.min=0 x.max=4 y.min=0 y.max=4
+    export function checkForTriggers(method: TriggerActivation, x: number, y: number) {
+        for (let i = 0; i < _ingame_enabled_triggers.length; i++) {
+            if (trigger.isEnabled() && trigger.activation() == method && (trigger.x() == x && trigger.y() == y) || (trigger.activation() == TriggerActivation.OnSpawn || trigger.activation() == TriggerActivation.OnDespawn)) {
+                try {
+                    trigger.activate()
+                } catch {}
+            }
+        }
+    }
 
     //% block="state of led x$x y$y"
+    //% x.min=0 x.max=4 y.min=0 y.max=4
     //% color="#50333f"
     export function ledState(x: number, y: number): boolean {
         for (let block of _ingame_sprites_blocks) {
@@ -100,5 +157,11 @@ namespace RPGMaker {
             }
         }
         _maps[id] = map
+        _current_map = id
+    }
+
+    //% block="enable secondary buttons"
+    export function enableSecondaryButtons() {
+        
     }
 }

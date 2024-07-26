@@ -4,6 +4,12 @@ enum ElementDisplayMode {
     //% block="global"
     Global = 1
 }
+enum Directions {
+    //% block="left-right"
+    LeftRight = 0,
+    //% block="up-down"
+    UpDown = 1
+}
 enum Objetives {
     //% block="none"
     None = 0,

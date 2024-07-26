@@ -1,8 +1,9 @@
 //% block="RPG - Warps" weight=2
 //% color="#735290" icon="\uf1e5"
 namespace Warps {
-    //% block="create new warp at x$x y$y target at x$targetX y$targetY do transition?$doTransition to map id$targetMapId"
-    //% inlineInputMode=inline weight=120 color="#623775"
+    //% block="create new warp at x$x at y$y target at x$targetX target at y$targetY do transition?$doTransition target map id$targetMapId"
+    //% x.min=0 x.max=4 y.min=0 y.max=4 targetX.min=0 targetX.max=4 targetY.min=0 targetY.max=4
+    //% weight=120 color="#623775"
     export function createWarp(x: number, y: number, targetX: number, targetY: number, doTransition: boolean, targetMapId: number) {
         return new warp(x, y, targetX, targetY, doTransition, targetMapId)
     }
@@ -27,6 +28,7 @@ namespace Warps {
         }
 
         //% block="$this set origin x to$newX"
+        //% newX.min=0 newX.max=4
         //% weight=115
         //% this.defl=warp
         //% this.shadow=variables_get
@@ -35,6 +37,7 @@ namespace Warps {
         }
 
         //% block="$this set origin y to$newY"
+        //% newY.min=0 newY.max=4
         //% weight=110
         //% this.defl=warp
         //% this.shadow=variables_get
@@ -43,6 +46,7 @@ namespace Warps {
         }
 
         //% block="$this change origin x by$addX"
+        //% addX.min=0 addX.max=4
         //% weight=105
         //% this.defl=warp
         //% this.shadow=variables_get
@@ -51,6 +55,7 @@ namespace Warps {
         }
 
         //% block="$this change origin y by$addY"
+        //% addY.min=0 addY.max=4
         //% weight=100
         //% this.defl=warp
         //% this.shadow=variables_get
@@ -59,6 +64,7 @@ namespace Warps {
         }
 
         //% block="$this set origin to x$x y$y"
+        //% x.min=0 x.max=4 y.min=0 y.max=4
         //% weight=95
         //% this.defl=warp
         //% this.shadow=variables_get
@@ -84,6 +90,7 @@ namespace Warps {
         }
 
         //% block="$this set target x to$newX"
+        //% newX.min=0 newX.max=4
         //% weight=80
         //% this.defl=warp
         //% this.shadow=variables_get
@@ -92,6 +99,7 @@ namespace Warps {
         }
 
         //% block="$this set target y to$newY"
+        //% newY.min=0 newY.max=4
         //% weight=75
         //% this.defl=warp
         //% this.shadow=variables_get
@@ -100,6 +108,7 @@ namespace Warps {
         }
 
         //% block="$this change target x by$addX"
+        //% addX.min=0 addX.max=4
         //% weight=70
         //% this.defl=warp
         //% this.shadow=variables_get
@@ -108,6 +117,7 @@ namespace Warps {
         }
 
         //% block="$this change target y by$addY"
+        //% addY.min=0 addY.max=4
         //% weight=65
         //% this.defl=warp
         //% this.shadow=variables_get
@@ -116,6 +126,7 @@ namespace Warps {
         }
 
         //% block="$this set target to x$x y$y"
+        //% x.min=0 x.max=4 y.min=0 y.max=4
         //% weight=60
         //% this.defl=warp
         //% this.shadow=variables_get

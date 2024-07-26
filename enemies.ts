@@ -25,6 +25,7 @@ namespace Enemies {
         }
 
         //% block="$this set x to$newX"
+        //% newX.min=0 newX.max=4
         //% weight=95
         //% this.defl=enemie
         //% this.shadow=variables_get
@@ -33,6 +34,7 @@ namespace Enemies {
         }
 
         //% block="$this set y to$newY"
+        //% newY.min=0 newY.max=4
         //% weight=90
         //% this.defl=enemie
         //% this.shadow=variables_get
@@ -41,6 +43,7 @@ namespace Enemies {
         }
 
         //% block="$this change x by$addX"
+        //% addX.min=0 addX.max=4
         //% weight=85
         //% this.defl=enemie
         //% this.shadow=variables_get
@@ -49,6 +52,7 @@ namespace Enemies {
         }
 
         //% block="$this change y by$addY"
+        //% addY.min=0 addY.max=4
         //% weight=80
         //% this.defl=enemie
         //% this.shadow=variables_get
@@ -57,6 +61,7 @@ namespace Enemies {
         }
 
         //% block="$this go to x$x y$y"
+        //% x.min=0 x.max=4 y.min=0 y.max=4
         //% weight=75
         //% this.defl=enemie
         //% this.shadow=variables_get

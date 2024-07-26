@@ -2,6 +2,7 @@
 //% color="#44964d" icon="\uf1e5"
 namespace NPCs {
     //% block="create new npc on x$x y$y with dialog$dialog"
+    //% x.min=0 x.max=4 y.min=0 y.max=4
     //% weight=100 color="#434c48" inlineInputMode=inline
     export function createNPC(x: number, y: number, dialog: string): npc {
         return new npc(x, y, dialog)
@@ -23,6 +24,7 @@ namespace NPCs {
         }
 
         //% block="$this set x to$newX"
+        //% newX.min=0 newX.max=4
         //% weight=95
         //% this.defl=npc
         //% this.shadow=variables_get
@@ -31,6 +33,7 @@ namespace NPCs {
         }
 
         //% block="$this set y to$newY"
+        //% newY.min=0 newY.max=4
         //% weight=90
         //% this.defl=npc
         //% this.shadow=variables_get
@@ -39,6 +42,7 @@ namespace NPCs {
         }
         
         //% block="$this change x by$addX"
+        //% addX.min=0 addX.max=4
         //% weight=85
         //% this.defl=npc
         //% this.shadow=variables_get
@@ -47,6 +51,7 @@ namespace NPCs {
         }
 
         //% block="$this change y by$addY"
+        //% addY.min=0 addY.max=4
         //% weight=80
         //% this.defl=npc
         //% this.shadow=variables_get
@@ -55,6 +60,7 @@ namespace NPCs {
         }
 
         //% block="$this go to x$x y$y"
+        //% x.min=0 x.max=4 y.min=0 y.max=4
         //% weight=75
         //% this.defl=npc
         //% this.shadow=variables_get
