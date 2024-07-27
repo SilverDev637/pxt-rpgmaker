@@ -9,7 +9,7 @@ namespace UIs {
     export class ui {
         private _icon: Image
         private _enabled: boolean = true
-        private _on_select = () => {}
+        _on_select = () => {}
 
         constructor(icon: Image) {
             this._icon = icon
@@ -23,8 +23,24 @@ namespace UIs {
             this._on_select = a
         }
 
+        //% block="$this get icon"
+        //% weight=90 color="#6d5329"
+        //% this.defl=UI
+        //% this.shadow=variables_get
+        icon(): Image {
+            return this._icon
+        }
+
+        //% block="$this set icon to$newIcon"
+        //% weight=85 color="#6d5329"
+        //% this.defl=UI
+        //% this.shadow=variables_get
+        setIcon(newIcon: Image) {
+            this._icon = newIcon
+        }
+
         //% block="$this enable"
-        //% weight=70
+        //% weight=80
         //% this.defl=UI
         //% this.shadow=variables_get
         enable() {
@@ -32,7 +48,7 @@ namespace UIs {
         }
 
         //% block="$this disable"
-        //% weight=65
+        //% weight=75
         //% this.defl=UI
         //% this.shadow=variables_get
         disable() {
@@ -40,7 +56,7 @@ namespace UIs {
         }
 
         //% block="$this is enabled?"
-        //% weight=60 color="#6d5329"
+        //% weight=70 color="#6d5329"
         //% this.defl=UI
         //% this.shadow=variables_get
         isEnabled(): boolean {
@@ -48,7 +64,7 @@ namespace UIs {
         }
 
         //% block="$this is disabled?"
-        //% weight=55 color="#6d5329"
+        //% weight=65 color="#6d5329"
         //% this.defl=UI
         //% this.shadow=variables_get
         isDisabled(): boolean {

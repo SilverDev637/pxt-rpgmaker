@@ -25,7 +25,7 @@ let item = Items.createItem(
         # . # # .
     `),
     false,
-    Objetives.DamageEnemie
+    Objetives.Damage
 )
 let item1 = Items.createItem(
     "SWORD 2",
@@ -37,12 +37,28 @@ let item1 = Items.createItem(
         # . # # .
     `),
     false,
-    Objetives.DamageEnemie
+    Objetives.Damage
 )
 let warp2 = Warps.createWarp(0, 2, 4, 2, true, 0)
 let warp1 = Warps.createWarp(4, 2, 0, 2, true, 1)
 let trigger = Triggers.createTrigger(2, 3, TriggerActivation.OnStepIn, -1)
 let player = Player.createPlayer(2, 2)
+let menu = Menus.createMenu()
+let menuItem = UIs.createUI(images.createImage(`
+    00000
+    01010
+    00000
+    01010
+    00000
+`))
+
+menuItem.onSelect(() => {
+    console.log("UI")
+    menu.close()
+})
+
+menu.appendUI(menuItem)
+
 player.enableMovementControls()
 
 stack.appendItem(item)
@@ -61,4 +77,6 @@ map2.appendElement(stack)
 map2.appendElement(warp2)
 map2.appendElement(trigger)
 map1.appendElement(warp1)
+//RPGMaker.buildDefaultInventory()
 map2.plotElements()
+menu.open()

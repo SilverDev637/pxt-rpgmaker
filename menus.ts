@@ -8,13 +8,12 @@ namespace Menus {
     }
 
     export class menu {
-        private _on_open_event = () => {}
-        private _on_close_event = () => {}
-        private _uis: UIs.ui[]
+        private _on_open_event = () => { }
+        private _on_close_event = () => { }
+        private _uis: UIs.ui[] = []
         private _enabled: boolean = true
-        private _last_items: boolean[] = [true, true, true, true, true, true]
-        constructor() {}
-        
+        constructor() { }
+
         //% block="$this append ui$ui"
         //% weight=95
         //% this.defl=menu
@@ -50,7 +49,30 @@ namespace Menus {
                 RPGMaker.turnOff()
                 this._on_open_event()
                 if (this._uis.length > 0) {
-                    //TODO: Show the first element of this._uis
+                    RPGMaker._move = false
+                    RPGMaker._current_uis = this._uis
+                    RPGMaker._selected_ui = 0
+                    RPGMaker._enabled_menus_buttons = true
+                    RPGMaker.updateUI()
+                    input.onButtonPressed(Button.A, function () {
+                        if (RPGMaker._enabled_menus_buttons) {
+                            RPGMaker._selected_ui -= RPGMaker._selected_ui == 0 ? RPGMaker._current_uis.length - 1 : 1
+                            console.log(RPGMaker._selected_ui)
+                            RPGMaker.updateUI()
+                        }
+                    })
+                    input.onButtonPressed(Button.B, function () {
+                        if (RPGMaker._enabled_menus_buttons) {
+                            RPGMaker._selected_ui += RPGMaker._selected_ui == RPGMaker._current_uis.length - 1 ? 0 : 1
+                            RPGMaker.updateUI()
+                        }
+                    })
+                    input.onButtonPressed(Button.AB, function () {
+                        if (RPGMaker._enabled_menus_buttons) {
+                            RPGMaker._current_uis[RPGMaker._selected_ui]._on_select()
+                        }
+                    })
+                    
                 } else {
                     this.close()
                 }
@@ -63,6 +85,11 @@ namespace Menus {
         //% this.shadow=variables_get
         close() {
             if (this._enabled) {
+                RPGMaker._move = true
+                RPGMaker._enabled_menus_buttons = false
+                RPGMaker._selected_ui = 0
+                RPGMaker._current_uis = []
+                RPGMaker.clearImage()
                 RPGMaker.turnOn()
                 this._on_close_event()
             }

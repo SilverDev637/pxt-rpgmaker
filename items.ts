@@ -12,11 +12,11 @@ namespace Items {
     export class item {
         kind: 'item' = 'item'
         private _name: string
-        private _icon: Image
+        _icon: Image
         private _stackable: boolean
         private _objetive: Objetives
         private _multiplier = 0
-        private _on_use = () => {}
+        _on_use = () => {}
         constructor(name: string, icon: Image, stackable: boolean, objetive: Objetives) {
             this._name = name
             this._icon = icon
