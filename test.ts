@@ -42,10 +42,14 @@ let item1 = Items.createItem(
 let warp2 = Warps.createWarp(0, 2, 4, 2, true, 0)
 let warp1 = Warps.createWarp(4, 2, 0, 2, true, 1)
 let trigger = Triggers.createTrigger(2, 3, TriggerActivation.OnStepIn, -1)
-let playe = Player.createPlayer(2, 2)
-playe.enableMovementControls()
+let player = Player.createPlayer(2, 2)
+player.enableMovementControls()
 
 stack.appendItem(item)
+
+trigger.onTriggerEvent(() => {
+    RPGMaker.teleportTo(2, 2)
+})
 
 map2.appendElement(enemie)
 map2.appendElement(npc)

@@ -10,16 +10,22 @@ namespace Stacks {
 
     export class stack {
         kind: 'stack' = 'stack'
+        private _id: number
         private _x: number
         private _y: number
         private _content: Items.item[] = [null, null, null, null, null, null, null, null, null, null, null]
         private _on_pickup = () => { }
         private _enabled: boolean = true
-        private _display_mode: ElementDisplayMode = ElementDisplayMode.Local
 
         constructor(x: number, y: number) {
             this._x = x
             this._y = y
+            this._id = RPGMaker._stacks_collection.length
+            RPGMaker._stacks_collection.push(false)
+        }
+
+        id() {
+            return this._id
         }
 
         //% block="$this set x to$newX"
@@ -174,15 +180,6 @@ namespace Stacks {
         //% this.shadow=variables_get
         isDisabled(): boolean {
             return !this._enabled
-        }
-
-        //% block="$this set display mode to$newDisplay"
-        //% weight=25
-        //% this.defl=stack
-        //% this.shadow=variables_get
-        //% newDisplay.defl=ElementDisplayMode.Local
-        setDisplayMode(newDisplay: ElementDisplayMode) {
-            this._display_mode = newDisplay
         }
     }
 }

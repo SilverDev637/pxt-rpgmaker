@@ -10,7 +10,6 @@ namespace Player {
 
     export class player {
         private _direction: number = 0
-        private _move = true
         constructor(x: number, y: number) {
             RPGMaker._player = game.createSprite(x, y)
             RPGMaker._player.setBrightness(255)
@@ -99,33 +98,38 @@ namespace Player {
         //% this.shadow=variables_get
         enableMovementControls() {
             control.onEvent(EventBusSource.MICROBIT_ID_BUTTON_A, EventBusValue.MICROBIT_BUTTON_EVT_DOWN, function () {
-                control.inBackground(() => {
-                    let old_pos = [RPGMaker._player.x(), RPGMaker._player.y()]
-                    RPGMaker._player.change(this._direction, -1)
-                    if (RPGMaker.ledState(RPGMaker._player.x(), RPGMaker._player.y())) {
-                        RPGMaker._player.change(this._direction, 1)
-                    } else {
-                        RPGMaker.checkForTriggers(TriggerActivation.OnStepOut, old_pos[0], old_pos[1])
-                        RPGMaker.checkForTriggers(TriggerActivation.OnStepIn, RPGMaker._player.x(), RPGMaker._player.y())
-                        RPGMaker.checkForWarps(RPGMaker._player.x(), RPGMaker._player.y())
-                    }
-                })
+                if (RPGMaker._move) {
+                    control.inBackground(() => {
+                        let old_pos = [RPGMaker._player.x(), RPGMaker._player.y()]
+                        RPGMaker._player.change(this._direction, -1)
+                        if (RPGMaker.ledState(RPGMaker._player.x(), RPGMaker._player.y())) {
+                            RPGMaker._player.change(this._direction, 1)
+                        } else {
+                            RPGMaker.checkForStacks(RPGMaker._player.x(), RPGMaker._player.y())
+                            RPGMaker.checkForTriggers(TriggerActivation.OnStepOut, old_pos[0], old_pos[1])
+                            RPGMaker.checkForTriggers(TriggerActivation.OnStepIn, RPGMaker._player.x(), RPGMaker._player.y())
+                            RPGMaker.checkForWarps(RPGMaker._player.x(), RPGMaker._player.y())
+                        }
+                    })
+                }
             })
             control.onEvent(EventBusSource.MICROBIT_ID_BUTTON_B, EventBusValue.MICROBIT_BUTTON_EVT_DOWN, function () {
-                control.inBackground(() => {
-                    let old_pos = [RPGMaker._player.x(), RPGMaker._player.y()]
-                    RPGMaker._player.change(this._direction, 1)
-                    if (RPGMaker.ledState(RPGMaker._player.x(), RPGMaker._player.y())) {
-                        RPGMaker._player.change(this._direction, -1)
-                    } else {
-                        RPGMaker.checkForTriggers(TriggerActivation.OnStepOut, old_pos[0], old_pos[1])
-                        RPGMaker.checkForTriggers(TriggerActivation.OnStepIn, RPGMaker._player.x(), RPGMaker._player.y())
-                        RPGMaker.checkForWarps(RPGMaker._player.x(), RPGMaker._player.y())
-                    }
-                })
+                if (RPGMaker._move) {
+                    control.inBackground(() => {
+                        let old_pos = [RPGMaker._player.x(), RPGMaker._player.y()]
+                        RPGMaker._player.change(this._direction, 1)
+                        if (RPGMaker.ledState(RPGMaker._player.x(), RPGMaker._player.y())) {
+                            RPGMaker._player.change(this._direction, -1)
+                        } else {
+                            RPGMaker.checkForTriggers(TriggerActivation.OnStepOut, old_pos[0], old_pos[1])
+                            RPGMaker.checkForTriggers(TriggerActivation.OnStepIn, RPGMaker._player.x(), RPGMaker._player.y())
+                            RPGMaker.checkForWarps(RPGMaker._player.x(), RPGMaker._player.y())
+                        }
+                    })
+                }
             })
             control.onEvent(EventBusSource.MICROBIT_ID_BUTTON_AB, EventBusValue.MICROBIT_BUTTON_EVT_DOWN, function () {
-                this._direction = this._direction == 1 ? 0 : 1
+                if (RPGMaker._move) { this._direction = this._direction == 1 ? 0 : 1 }
             })
         }
     }

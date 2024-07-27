@@ -4,11 +4,16 @@ namespace RPGMaker {
     export let _ingame_sprites_blocks: game.LedSprite[] = []
     export let _ingame_sprites_npcs: game.LedSprite[] = []
     export let _ingame_sprites_enemies: game.LedSprite[] = []
-    export let _ingame_sprites_stacks: {sprite: game.LedSprite; brightness: number}[] = []
+    export let _ingame_sprites_stacks: { sprite: game.LedSprite; brightness: number }[] = []
+    export let _ingame_enabled_stacks: Stacks.stack[] = []
     export let _ingame_enabled_warps: Warps.warp[] = []
     export let _ingame_enabled_triggers: Triggers.trigger[] = []
     export let _player: game.LedSprite
-
+    export let _move = true
+    export let _inventory: Items.item[] = []
+    export let _stacks_collection: boolean[] = []
+    
+    let _ingame_disabled_stacks: Stacks.stack[] = []
     let _ingame_disabled_warps: Warps.warp[] = []
     let _ingame_disabled_triggers: Triggers.trigger[] = []
 
@@ -39,6 +44,42 @@ namespace RPGMaker {
         }
     }
 
+    //% block="teleport player to x$x y$y|| target map id$targetMap transition?$transition"
+    //% inlineInputMode=inline x.min=0 x.max=4 y.min=0 y.max=4
+    export function teleportTo(x: number, y: number, targetMap?: number, transition: boolean=true) {
+        _move = false
+        if (isNaN(targetMap)) { targetMap = _current_map }
+        if (_current_map != targetMap) { checkForTriggers(TriggerActivation.OnDespawn, 0, 0) }
+        if (transition) { fadeOut(100) }
+        deleteAll()
+        _player.goTo(x, y)
+        _maps[targetMap].plotElements()
+        if (transition) { fadeIn(100) }
+        if (_current_map != targetMap) { checkForTriggers(TriggerActivation.OnSpawn, 0, 0) }
+        _move = true
+    }
+
+    //% block="check for stacks on x$x y$y"
+    //% x.min=0 x.max=4 y.min=0 y.max=4
+    export function checkForStacks(x: number, y: number) {
+        for (let i = 0; i < _ingame_enabled_stacks.length; i++) {
+            let stack = _ingame_enabled_stacks[i]
+            if (stack.isEnabled() && stack.x() == x && stack.y() == y && !_stacks_collection[stack.id()]) {
+                try {
+                    for (let t = 0; t < stack.content().length; t++) {
+                        _inventory.push(stack.content()[t])
+                    }
+                    for (let t = 0; t < stack.content().length; t++) {
+                        stack.removeItemAt(0)
+                    }
+                    _stacks_collection[stack.id()] = true
+                    _ingame_enabled_stacks.removeAt(i)
+                    _ingame_sprites_stacks.removeAt(i).sprite.delete()
+                } catch { }
+            }
+        }
+    }
+
     //% block="check for warps on x$x y$y"
     //% x.min=0 x.max=4 y.min=0 y.max=4
     export function checkForWarps(x: number, y: number) {
@@ -46,13 +87,7 @@ namespace RPGMaker {
             let warp = _ingame_enabled_warps[i]
             if (warp.isEnabled() && warp.originX() == x && warp.originY() == y) {
                 try {
-                    checkForTriggers(TriggerActivation.OnDespawn, 0, 0)
-                    if (warp.isTransitionEnabled()) { fadeOut(100) }
-                    deleteAll()
-                    _player.goTo(warp.targetX(), warp.targetY())
-                    _maps[warp.targetMap()].plotElements()
-                    if (warp.isTransitionEnabled()) { fadeIn(100) }
-                    checkForTriggers(TriggerActivation.OnSpawn, 0, 0)
+                    teleportTo(warp.targetX(), warp.targetY(), warp.targetMap(), warp.isTransitionEnabled())
                 } catch {}
             }
         } 
@@ -86,11 +121,6 @@ namespace RPGMaker {
         }
         for (let enemie of _ingame_sprites_enemies) {
             if (enemie.x() == x && enemie.y() == y) {
-                return true
-            }
-        }
-        for (let stack of _ingame_sprites_stacks) {
-            if (stack.sprite.x() == x && stack.sprite.y() == y) {
                 return true
             }
         }

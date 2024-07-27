@@ -161,6 +161,7 @@ namespace Maps {
                     let sprite_stack = game.createSprite(stack.x(), stack.y())
                     sprite_stack.setBrightness(stack.content().length * (128 / 10))
                     RPGMaker._ingame_sprites_stacks.push({ sprite: sprite_stack, brightness: stack.content().length * (128 / 10) })
+                    RPGMaker._ingame_enabled_stacks.push(stack)
                 }
             }
             this._displaying_stacks = true
