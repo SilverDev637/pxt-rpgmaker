@@ -13,7 +13,6 @@ namespace RPGMaker {
     export let _inventory: Items.item[] = []
     export let _stacks_collection: boolean[] = []
     
-    let _ingame_disabled_stacks: Stacks.stack[] = []
     let _ingame_disabled_warps: Warps.warp[] = []
     let _ingame_disabled_triggers: Triggers.trigger[] = []
 
@@ -73,7 +72,7 @@ namespace RPGMaker {
                         stack.removeItemAt(0)
                     }
                     _stacks_collection[stack.id()] = true
-                    _ingame_enabled_stacks.removeAt(i)
+                    _ingame_enabled_stacks.removeAt(i)._on_pickup()
                     _ingame_sprites_stacks.removeAt(i).sprite.delete()
                 } catch { }
             }

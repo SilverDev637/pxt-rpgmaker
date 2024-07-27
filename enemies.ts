@@ -15,7 +15,6 @@ namespace Enemies {
         private _damage: number
         private _on_death = () => { }
         private _enabled: boolean = true
-        private _display_mode: ElementDisplayMode = ElementDisplayMode.Local
 
         constructor(x: number, y: number, life: number, damage: number) {
             this._x = x
@@ -156,15 +155,6 @@ namespace Enemies {
         //% this.shadow=variables_get
         isDisabled(): boolean {
             return !this._enabled
-        }
-
-        //% block="$this set display mode to$newDisplay"
-        //% weight=25
-        //% this.defl=enemie
-        //% this.shadow=variables_get
-        //% newDisplay.defl=ElementDisplayMode.Local
-        setDisplayMode(newDisplay: ElementDisplayMode) {
-            this._display_mode = newDisplay
         }
     }
 }

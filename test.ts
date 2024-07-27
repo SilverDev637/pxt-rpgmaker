@@ -47,6 +47,10 @@ player.enableMovementControls()
 
 stack.appendItem(item)
 
+stack.onPickUpEvent(() => {
+    console.log("STACK")
+})
+
 trigger.onTriggerEvent(() => {
     RPGMaker.teleportTo(2, 2)
 })

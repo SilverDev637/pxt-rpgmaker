@@ -15,7 +15,6 @@ namespace NPCs {
         private _y: number
         private _on_interact = () => {}
         private _enabled: boolean = true
-        private _display_mode: ElementDisplayMode = ElementDisplayMode.Local
 
         constructor(x: number, y: number, dialog: string) {
             this._x = x
@@ -139,15 +138,6 @@ namespace NPCs {
         //% this.shadow=variables_get
         isDisabled(): boolean {
             return !this._enabled
-        }
-
-        //% block="$this set display mode to$newDisplay"
-        //% weight=25
-        //% this.defl=npc
-        //% this.shadow=variables_get
-        //% newDisplay.defl=ElementDisplayMode.Local
-        setDisplayMode(newDisplay: ElementDisplayMode) {
-            this._display_mode = newDisplay
         }
     }
 }

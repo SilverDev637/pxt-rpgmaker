@@ -16,7 +16,6 @@ namespace Triggers {
         private _action = () => { }
         private _times: number
         private _enabled = true
-        private _display_mode = ElementDisplayMode.Local
         constructor(x: number, y: number, activation: TriggerActivation, times: number) {
             this._x = x
             this._y = y
@@ -172,15 +171,6 @@ namespace Triggers {
         //% this.shadow=variables_get
         isDisabled(): boolean {
             return !this._enabled
-        }
-
-        //% block="$this set display mode to$newDisplay"
-        //% weight=25
-        //% this.defl=trigger
-        //% this.shadow=variables_get
-        //% newDisplay.defl=ElementDisplayMode.Local
-        setDisplayMode(newDisplay: ElementDisplayMode) {
-            this._display_mode = newDisplay
         }
     }
 }

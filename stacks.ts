@@ -14,7 +14,7 @@ namespace Stacks {
         private _x: number
         private _y: number
         private _content: Items.item[] = [null, null, null, null, null, null, null, null, null, null, null]
-        private _on_pickup = () => { }
+        _on_pickup = () => { }
         private _enabled: boolean = true
 
         constructor(x: number, y: number) {
