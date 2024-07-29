@@ -19,9 +19,10 @@ namespace RPGMaker {
     export let _selected_ui = 0
     export let _current_uis: UIs.ui[] = []
     export let _enabled_menus_buttons = false
-    
+    export let _player_dir: number = NaN
+
     let itemMenu: Menus.menu = Menus.createMenu()
-    
+
     let _ingame_disabled_warps: Warps.warp[] = []
     let _ingame_disabled_triggers: Triggers.trigger[] = []
 
@@ -111,7 +112,7 @@ namespace RPGMaker {
             pauseMenu.close()
             inventoryMenu.open()
         })
-        
+
         pauseMenu.appendUI(inventoryUI)
     }
 
@@ -163,14 +164,14 @@ namespace RPGMaker {
             "",
             `${item.multiplier()}DAM`,
             `POISON ${item.multiplier()}s`,
-            `${item.multiplier().toString()[0] == "-"? "" : "+"}${item.multiplier()}HP`
+            `${item.multiplier().toString()[0] == "-" ? "" : "+"}${item.multiplier()}HP`
         ]
         return effects[item.objetive()]
     }
 
     //% block="fade in $msms"
     export function fadeIn(ms: number) {
-        for (let i = 0; i < 255; i+=255/ms) {
+        for (let i = 0; i < 255; i += 255 / ms) {
             led.setBrightness(i)
             basic.pause(1)
         }
@@ -186,7 +187,7 @@ namespace RPGMaker {
 
     //% block="teleport player to x$x y$y|| target map id$targetMap transition?$transition"
     //% inlineInputMode=inline x.min=0 x.max=4 y.min=0 y.max=4
-    export function teleportTo(x: number, y: number, targetMap?: number, transition: boolean=true) {
+    export function teleportTo(x: number, y: number, targetMap?: number, transition: boolean = true) {
         _move = false
         if (isNaN(targetMap)) { targetMap = _current_map }
         if (_current_map != targetMap) { checkForTriggers(TriggerActivation.OnDespawn, 0, 0) }
@@ -240,9 +241,9 @@ namespace RPGMaker {
             if (warp.isEnabled() && warp.originX() == x && warp.originY() == y) {
                 try {
                     teleportTo(warp.targetX(), warp.targetY(), warp.targetMap(), warp.isTransitionEnabled())
-                } catch {}
+                } catch { }
             }
-        } 
+        }
     }
 
     //% block="check for triggers with method$method on x$x y$y"
@@ -252,7 +253,7 @@ namespace RPGMaker {
             if (trigger.isEnabled() && trigger.activation() == method && (trigger.x() == x && trigger.y() == y) || (trigger.activation() == TriggerActivation.OnSpawn || trigger.activation() == TriggerActivation.OnDespawn)) {
                 try {
                     trigger.activate()
-                } catch {}
+                } catch { }
             }
         }
     }
@@ -281,7 +282,6 @@ namespace RPGMaker {
 
     //% block="delete all from screen"
     export function deleteAll() {
-        _player.off()
         for (let i of _ingame_sprites_blocks) { i.delete() }
         _ingame_sprites_blocks = []
         for (let i of _ingame_sprites_npcs) { i.delete() }
@@ -335,22 +335,73 @@ namespace RPGMaker {
     }
 
     export function _setMap(map: Maps.map, id: number) {
-        for (let i = 0; i < id+1; i++) {
+        for (let i = 0; i < id + 1; i++) {
             _maps.push(null)
             if (_maps[i] != null) {
-                _maps.removeAt(_maps.length-1)
+                _maps.removeAt(_maps.length - 1)
             }
         }
         _maps[id] = map
         _current_map = id
     }
 
-    //% block="enable secondary buttons|| Pin0?$pin0 Pin1?$pin1 Pin2?$pin2"
-    export function enableSecondaryButtons(pin0: boolean=true, pin1: boolean=true, pin2: boolean=true) {
-        if (pin0) {
-            input.onPinPressed(TouchPin.P0, () => {
+    //% block="enable controls"
+    export function enableControls() {
+        input.onButtonPressed(Button.A, () => {
+            if (_move && !input.buttonIsPressed(Button.B)) {
+                control.inBackground(() => {
+                    let old_pos = [_player.x(), _player.y()]
+                    _player.change(_player_dir, -1)
+                    if (ledState(_player.x(), _player.y())) {
+                        _player.change(_player_dir, 1)
+                    } else {
+                        checkForStacks(_player.x(), _player.y())
+                        checkForTriggers(TriggerActivation.OnStepOut, old_pos[0], old_pos[1])
+                        checkForTriggers(TriggerActivation.OnStepIn, _player.x(), _player.y())
+                        checkForWarps(_player.x(), _player.y())
+                    }
+                })
+            }else if (_enabled_menus_buttons && !input.buttonIsPressed(Button.B)) {
+                _selected_ui -= _selected_ui == 0 ? _current_uis.length - 1 : 1
+                console.log(_selected_ui)
+                updateUI()
+            }
+        })
+        input.onButtonPressed(Button.B, () => {
+            if (_move && !input.buttonIsPressed(Button.A)) {
+                control.waitForEvent(EventBusSource.MICROBIT_ID_BUTTON_B, EventBusValue.MICROBIT_BUTTON_EVT_UP)
+                control.inBackground(() => {
+                    let old_pos = [_player.x(), _player.y()]
+                    _player.change(_player_dir, 1)
+                    if (ledState(_player.x(), _player.y())) {
+                        _player.change(_player_dir, -1)
+                    } else {
+                        checkForTriggers(TriggerActivation.OnStepOut, old_pos[0], old_pos[1])
+                        checkForTriggers(TriggerActivation.OnStepIn, _player.x(), _player.y())
+                        checkForWarps(_player.x(), _player.y())
+                    }
+                })
+            }else if (_enabled_menus_buttons && !input.buttonIsPressed(Button.A)) {
+                _selected_ui += _selected_ui == _current_uis.length - 1 ? 0 : 1
+                updateUI()
+            }
+        })
+        input.onButtonPressed(Button.AB, () => {
+            if (_move) {
+                _move = false
+                basic.pause(100)
+                _player_dir = _player_dir == 1 ? 0 : 1
+                _move = true
+            } else if (_enabled_menus_buttons) {
+                _current_uis[_selected_ui]._on_select()
+            }
+        })
+    }
 
-            })
-        }
+    //% block="clear controls"
+    export function clearControls() {
+        input.onButtonPressed(Button.A, () => { })
+        input.onButtonPressed(Button.B, () => { })
+        input.onButtonPressed(Button.AB, () => { })
     }
 }

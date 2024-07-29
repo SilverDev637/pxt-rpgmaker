@@ -54,25 +54,6 @@ namespace Menus {
                     RPGMaker._selected_ui = 0
                     RPGMaker._enabled_menus_buttons = true
                     RPGMaker.updateUI()
-                    input.onButtonPressed(Button.A, function () {
-                        if (RPGMaker._enabled_menus_buttons) {
-                            RPGMaker._selected_ui -= RPGMaker._selected_ui == 0 ? RPGMaker._current_uis.length - 1 : 1
-                            console.log(RPGMaker._selected_ui)
-                            RPGMaker.updateUI()
-                        }
-                    })
-                    input.onButtonPressed(Button.B, function () {
-                        if (RPGMaker._enabled_menus_buttons) {
-                            RPGMaker._selected_ui += RPGMaker._selected_ui == RPGMaker._current_uis.length - 1 ? 0 : 1
-                            RPGMaker.updateUI()
-                        }
-                    })
-                    input.onButtonPressed(Button.AB, function () {
-                        if (RPGMaker._enabled_menus_buttons) {
-                            RPGMaker._current_uis[RPGMaker._selected_ui]._on_select()
-                        }
-                    })
-                    
                 } else {
                     this.close()
                 }

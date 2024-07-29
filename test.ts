@@ -59,7 +59,7 @@ menuItem.onSelect(() => {
 
 menu.appendUI(menuItem)
 
-player.enableMovementControls()
+RPGMaker.enableControls()
 
 stack.appendItem(item)
 
