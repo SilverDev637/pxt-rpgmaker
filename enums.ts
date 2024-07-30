@@ -18,7 +18,9 @@ enum Objetives {
     //% block="poision
     Poision = 2,
     //% block="heal"
-    Heal = 3
+    Heal = 3,
+    //% block="protection"
+    Protection = 4
 }
 enum TriggerActivation {
     //% block="on spawn"

@@ -9,7 +9,8 @@ namespace UIs {
     export class ui {
         private _icon: Image
         private _enabled: boolean = true
-        _on_select = () => {}
+        _on_select: () => void = () => {}
+        
 
         constructor(icon: Image) {
             this._icon = icon
@@ -21,6 +22,8 @@ namespace UIs {
         //% this.shadow=variables_get
         onSelect(a: () => void) {
             this._on_select = a
+            RPGMaker.clearImage()
+            basic.pause(100)
         }
 
         //% block="$this get icon"

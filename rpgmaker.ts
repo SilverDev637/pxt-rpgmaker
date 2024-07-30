@@ -9,20 +9,22 @@ namespace RPGMaker {
     export let _ingame_enabled_warps: Warps.warp[] = []
     export let _ingame_enabled_triggers: Triggers.trigger[] = []
     export let _player: game.LedSprite
+    export let _player_dir: number = NaN
     export let _move = true
-    export let _images: game.LedSprite[] = []
     export let _inventory: Items.item[] = []
     export let _inventory_quantity: number[] = []
+    export let _inventory_menu: Menus.menu = Menus.createMenu()
     export let _stacks_collection: boolean[] = []
+    
     export let pauseMenu: Menus.menu = Menus.createMenu()
-    export let inventoryMenu: Menus.menu = Menus.createMenu()
+    export let _images: game.LedSprite[] = []
     export let _selected_ui = 0
     export let _current_uis: UIs.ui[] = []
     export let _enabled_menus_buttons = false
-    export let _player_dir: number = NaN
+    export let _current_item = -1
+    export let _cancel = false
 
-    let itemMenu: Menus.menu = Menus.createMenu()
-
+    let _inventory_uis: Menus.menu[] = []
     let _ingame_disabled_warps: Warps.warp[] = []
     let _ingame_disabled_triggers: Triggers.trigger[] = []
 
@@ -35,6 +37,13 @@ namespace RPGMaker {
 
     export function _appendTrigger(trigger: Triggers.trigger) {
         _ingame_enabled_triggers.push(trigger)
+    }
+
+    //% block="set custom pause menu to$newMenu"
+    //% newMenu.defl=menu
+    //% newMenu.shadow=variables_get
+    export function setCustomPauseMenu(newMenu: Menus.menu) {
+        pauseMenu = newMenu
     }
 
     //% block="update ui"
@@ -65,7 +74,7 @@ namespace RPGMaker {
     }
 
     //% block="build default inventory"
-    export function buildDefaultInventory() {
+    export function buildDefaultPauseMenu() {
         let resumeUI = UIs.createUI(images.createImage(`
             01000
             01100
@@ -73,13 +82,18 @@ namespace RPGMaker {
             01100
             01000
         `))
-
         resumeUI.onSelect(() => {
             pauseMenu.close()
         })
-
         pauseMenu.appendUI(resumeUI)
-
+        pauseMenu.onOpen(() => {
+            RPGMaker._enabled_menus_buttons = true
+            RPGMaker._move = false
+        })
+        pauseMenu.onClose(() => {
+            RPGMaker._enabled_menus_buttons = false
+            RPGMaker._move = true
+        })
 
         let inventoryUI = UIs.createUI(images.createImage(`
             00001
@@ -90,36 +104,49 @@ namespace RPGMaker {
         `))
 
         inventoryUI.onSelect(() => {
-            let _inventory_items: UIs.ui[] = []
-            let _close_ui = UIs.createUI(images.createImage(`
-                10001
-                01010
-                00100
-                01010
-                10001
-            `))
-            _close_ui.onSelect(() => {
-                inventoryMenu.close()
-                pauseMenu.open()
-            })
-            for (let i = 0; i < _inventory.length; i++) {
-                let _inventory_item = UIs.createUI(_inventory[i]._icon)
-                _inventory_item.onSelect(() => {
-                    showItemData(_inventory[i], i)
-                })
-                _inventory_items.push(_inventory_item)
-            }
+            _inventory_menu.removeUIs()
+            updateInventoryUI()
             pauseMenu.close()
-            inventoryMenu.open()
+            _inventory_menu.open()
         })
-
         pauseMenu.appendUI(inventoryUI)
     }
 
-    //% block="show item$item data"
+    export function updateInventoryUI() {
+        let _close_ui = UIs.createUI(images.createImage(`
+                    10001
+                    01010
+                    00100
+                    01010
+                    10001
+                `))
+        _close_ui.onSelect(() => {
+            _inventory_menu.close()
+            pauseMenu.open()
+        })
+        for (let i = 0; i < _inventory.length; i++) {
+            _inventory_uis.push(buildItemUI(i))
+            let _inventory_item = UIs.createUI(_inventory[i]._icon)
+            
+            _inventory_item.onSelect(() => {
+                RPGMaker._current_item = RPGMaker._selected_ui
+                _inventory_menu.close()
+                _inventory_uis[RPGMaker._current_item].open()
+            })
+            _inventory_menu.appendUI(_inventory_item)
+        }
+        _inventory_menu.appendUI(_close_ui)
+    }
+
+    //% block="show item$item data id$id"
     //% item.defl=item
     //% item.shadow=variables_get
-    export function showItemData(item: Items.item, id: number) {
+    export function buildItemUI(id: number): Menus.menu {
+        let item = _inventory[id]
+        let itemMenu = Menus.createMenu()
+        let name = item.name()
+        let effect = _getItemEffect(item)
+        let quantity = _inventory_quantity[id]
         let showInfoUI = UIs.createUI(images.createImage(`
             . # . # .
             . # . # .
@@ -142,11 +169,13 @@ namespace RPGMaker {
             # . . . #
         `))
         showInfoUI.onSelect(() => {
-            basic.showString(`${item.name().toUpperCase()}  ${_getItemEffect(item)}  x${_inventory_quantity[id]}`)
+            RPGMaker._cancel = true
+            basic.showString(name + " " + effect + " x" + quantity, 75)
+            RPGMaker._cancel = false
         })
         goBackUI.onSelect(() => {
             itemMenu.close()
-            inventoryMenu.open()
+            _inventory_menu.open()
         })
         deleteItemUI.onSelect(() => {
             _inventory_quantity[id]--
@@ -154,17 +183,25 @@ namespace RPGMaker {
                 _inventory_quantity.removeAt(id)
                 _inventory.removeAt(id)
             }
+            _inventory_menu.removeUIs()
+            updateInventoryUI()
             itemMenu.close()
-            inventoryMenu.open()
+            _inventory_menu.open()
         })
+        itemMenu.removeUIs()
+        itemMenu.appendUI(showInfoUI)
+        itemMenu.appendUI(goBackUI)
+        itemMenu.appendUI(deleteItemUI)
+        return itemMenu
     }
 
     function _getItemEffect(item: Items.item) {
         let effects = [
             "",
-            `${item.multiplier()}DAM`,
-            `POISON ${item.multiplier()}s`,
-            `${item.multiplier().toString()[0] == "-" ? "" : "+"}${item.multiplier()}HP`
+            item.multiplier() + "DAM",
+            "POISON" + item.multiplier() + "s",
+            (item.multiplier().toString()[0] == "-" ? "" : "+") + item.multiplier() + "HP",
+            "+" + item.multiplier() + "%ARMOR"
         ]
         return effects[item.objetive()]
     }
@@ -208,18 +245,18 @@ namespace RPGMaker {
             if (stack.isEnabled() && stack.x() == x && stack.y() == y && !_stacks_collection[stack.id()]) {
                 try {
                     for (let t = 0; t < stack.content().length; t++) {
-                        let repeated = false
+                        let repeated = -1
                         for (let h = 0; h < _inventory.length; h++) {
                             if (_inventory[h].name().toUpperCase() == stack.content()[t].name().toUpperCase()) {
-                                repeated = true
+                                repeated = h
                                 break
                             }
-                            if (repeated) {
-                                _inventory_quantity[h]++
-                            } else {
-                                _inventory_quantity.push(1)
-                                _inventory.push(stack.content()[t])
-                            }
+                        }
+                        if (repeated > -1) {
+                            _inventory_quantity[repeated]++
+                        } else {
+                            _inventory_quantity.push(1)
+                            _inventory.push(stack.content()[t])
                         }
                     }
                     for (let t = 0; t < stack.content().length; t++) {
@@ -348,7 +385,7 @@ namespace RPGMaker {
     //% block="enable controls"
     export function enableControls() {
         input.onButtonPressed(Button.A, () => {
-            if (_move && !input.buttonIsPressed(Button.B)) {
+            if (_move) {
                 control.inBackground(() => {
                     let old_pos = [_player.x(), _player.y()]
                     _player.change(_player_dir, -1)
@@ -361,15 +398,13 @@ namespace RPGMaker {
                         checkForWarps(_player.x(), _player.y())
                     }
                 })
-            }else if (_enabled_menus_buttons && !input.buttonIsPressed(Button.B)) {
-                _selected_ui -= _selected_ui == 0 ? _current_uis.length - 1 : 1
-                console.log(_selected_ui)
+            } else if (_enabled_menus_buttons) {
+                _selected_ui = _selected_ui == 0 ? _current_uis.length - 1 : _selected_ui - 1
                 updateUI()
             }
         })
         input.onButtonPressed(Button.B, () => {
-            if (_move && !input.buttonIsPressed(Button.A)) {
-                control.waitForEvent(EventBusSource.MICROBIT_ID_BUTTON_B, EventBusValue.MICROBIT_BUTTON_EVT_UP)
+            if (_move) {
                 control.inBackground(() => {
                     let old_pos = [_player.x(), _player.y()]
                     _player.change(_player_dir, 1)
@@ -381,20 +416,35 @@ namespace RPGMaker {
                         checkForWarps(_player.x(), _player.y())
                     }
                 })
-            }else if (_enabled_menus_buttons && !input.buttonIsPressed(Button.A)) {
-                _selected_ui += _selected_ui == _current_uis.length - 1 ? 0 : 1
+            } else if (_enabled_menus_buttons) {
+                _selected_ui = _selected_ui == _current_uis.length - 1 ? 0 : _selected_ui + 1
                 updateUI()
             }
         })
         input.onButtonPressed(Button.AB, () => {
-            if (_move) {
+            if (_cancel) {
+                led.stopAnimation()
+                _cancel = false
+            } else if (_move) {
                 _move = false
                 basic.pause(100)
                 _player_dir = _player_dir == 1 ? 0 : 1
                 _move = true
             } else if (_enabled_menus_buttons) {
+                
                 _current_uis[_selected_ui]._on_select()
             }
+        })
+        input.onPinPressed(TouchPin.P0, () => {
+            if (_move) {
+                pauseMenu.open()
+            }
+        })
+        input.onPinPressed(TouchPin.P1, () => {
+
+        })
+        input.onPinPressed(TouchPin.P2, () => {
+
         })
     }
 
@@ -403,5 +453,8 @@ namespace RPGMaker {
         input.onButtonPressed(Button.A, () => { })
         input.onButtonPressed(Button.B, () => { })
         input.onButtonPressed(Button.AB, () => { })
+        input.onPinPressed(TouchPin.P0, () => { })
+        input.onPinPressed(TouchPin.P1, () => { })
+        input.onPinPressed(TouchPin.P2, () => { })
     }
 }

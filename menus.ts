@@ -10,6 +10,7 @@ namespace Menus {
     export class menu {
         private _on_open_event = () => { }
         private _on_close_event = () => { }
+        private _on_select_ui = (ui: number) => { }
         private _uis: UIs.ui[] = []
         private _enabled: boolean = true
         constructor() { }
@@ -24,11 +25,21 @@ namespace Menus {
             this._uis.push(ui)
         }
 
+        //% block="$this on select ui"
+        //% weight=93
+        //% this.defl=menu
+        //% this.shadow=variables_get
+        onSelectUI(a: (ui: number) => void) {
+            this._on_select_ui = a
+        }
+
         //% block="on open $this"
         //% weight=90 blockAllowMultiple=1 afterOnStart=true
         //% this.defl=menu
         //% this.shadow=variables_get
         onOpen(a: () => void) {
+            RPGMaker._enabled_menus_buttons = true
+            RPGMaker._move = false
             this._on_open_event = a
         }
 
@@ -37,6 +48,8 @@ namespace Menus {
         //% this.defl=menu
         //% this.shadow=variables_get
         onClose(a: () => void) {
+            RPGMaker._enabled_menus_buttons = false
+            RPGMaker._move = true
             this._on_close_event = a
         }
 
@@ -76,8 +89,32 @@ namespace Menus {
             }
         }
 
-        //% block="$this enable"
+        //% block="$this remove all uis"
         //% weight=70
+        //% this.defl=menu
+        //% this.shadow=variables_get
+        removeUIs() {
+            this._uis = []
+        }
+
+        //% block="$this get and remove ui at$index"
+        //% weight=70 color="#794a6f"
+        //% this.defl=menu
+        //% this.shadow=variables_get
+        getAndRemoveUIAt(index: number): UIs.ui {
+            return this._uis.removeAt(index)
+        }
+
+        //% block="$this remove ui at$index"
+        //% weight=70
+        //% this.defl=menu
+        //% this.shadow=variables_get
+        removeUIAt(index: number) {
+            this._uis.removeAt(index)
+        }
+
+        //% block="$this enable"
+        //% weight=15
         //% this.defl=menu
         //% this.shadow=variables_get
         enable() {
@@ -85,7 +122,7 @@ namespace Menus {
         }
 
         //% block="$this disable"
-        //% weight=65
+        //% weight=10
         //% this.defl=menu
         //% this.shadow=variables_get
         disable() {
@@ -93,7 +130,7 @@ namespace Menus {
         }
 
         //% block="$this is enabled?"
-        //% weight=60 color="#794a6f"
+        //% weight=5 color="#794a6f"
         //% this.defl=menu
         //% this.shadow=variables_get
         isEnabled(): boolean {
@@ -101,7 +138,7 @@ namespace Menus {
         }
 
         //% block="$this is disabled?"
-        //% weight=55 color="#794a6f"
+        //% weight=0 color="#794a6f"
         //% this.defl=menu
         //% this.shadow=variables_get
         isDisabled(): boolean {
